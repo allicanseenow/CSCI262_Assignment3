@@ -1,34 +1,91 @@
 package pkg262assignment3;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
+import java.io.*;
+import java.nio.*;
 public class Main 
 {
-    //global variable, i guess
+    //global variable, for storing all generated data
     public static List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
-    
+    //variable for log file name
+    public static String LogFileName = "log.txt";
     public static void main(String[] args) 
     {
-        // code for Initial Input
+        // CODE FOR INITIAL INPUT
         
-        // code for Activity Engine and Logs
-        int daysToSimulate = 10;
+        
+        
+        
+        
+        // CODE FOR ACTIVITY ENGINE AND LOGS
+        int daysToSimulate = 10;//get this later from initial input
         //call ActivityEngine, for each day
         for (int i=0;i<daysToSimulate;i++)
         {
             System.out.println("Starting Simulation for Day " + (i+1));
             ActivityEngine(i+1);//activity engine should take a list of input stats as well as day number
         }
+        //sort generateddatalist
+        Collections.sort(GeneratedDataList);
+        //call WriteToLog to write in entries
+        WriteToLog();
         
         
-   
+        
+        
+        //CODE FOR ANALYSIS ENGINE
+        
+        
+        
+        
+        
+        
+        
+        // CODE FOR ALERT ENGINE
+        
+    }
+    public static void WriteToLog()
+    {
+        //try to write stuff to log
+        try
+        {
+            BufferedWriter out = new BufferedWriter(new FileWriter(LogFileName,false));
+            //NOTE: true for append, false for overwrite
+            for(VehicleData v : GeneratedDataList)
+            {
+                out.write("Day:"+v.DayNumber);
+                out.write(":VType:"+v.VehicleName);
+                out.write(":ArrTime:"+v.ArrivalTime);
+                out.write(":DepTime:"+v.DepartureTime);
+                if(v.Parking==true)
+                {
+                    out.write(":Parking:y");
+                }else
+                {
+                    out.write(":Parking:n");
+                }
+                out.write(":ParkStart:"+v.ParkingStartTime);
+                out.write(":ParkEnd:"+v.ParkingStopTime);
+                out.write(":Speed:"+v.Speed);
+                out.write("\n");
+                //log file entries are as below
+                //Day:XX:VType:XX:ArrTime:XX:DepTime:XX:Parking:y/n:ParkStart:XX:ParkEnd:XX:Speed:XX
+                
+            }
+            out.close();
+        }catch(IOException e)
+        {
+            System.out.println(e);
+        }
     }
     
     public static void ActivityEngine(int dayNumber)//activity engine should take stats list as parameter as well
     {
         //for(vehiclestats vehicle : vehiclestats)//for every vehicle in the list of vehicle statistics
         //{
+            //declare variable for number of vehicles
             int numberOfVehicles;
+            //set standard dev and mean for num of vehicles
             double numStandardDev = 2;//vehicle.NumberStandardDev
             double numMean = 5;//vehicle.NumberMean
             //generate random number of vehicles for this one
@@ -132,7 +189,7 @@ public class Main
 
 
 //class for storing generated data
-class VehicleData//for storing all the generated data
+class VehicleData implements Comparable<VehicleData>
 {
     public String VehicleName;
     public int ArrivalTime;//time is in HHMM
@@ -172,5 +229,30 @@ class VehicleData//for storing all the generated data
         this.ParkingStopTime = ParkingStopTime;
         this.Speed = Speed;
         this.DayNumber = DayNumber;
+    }
+    @Override
+    public int compareTo(VehicleData v)
+    {
+        //compare by day number
+        int value1 = this.DayNumber - v.DayNumber;
+        if(value1==0)
+        {//if same day
+            //compare by arrival time
+            int value2 = this.ArrivalTime - v.ArrivalTime;
+            
+            if(value2==0)
+            {//if same arrival time
+                //compare by vehicle name
+                int value3 =this.VehicleName.compareTo(v.VehicleName);
+                return value3;
+            }else
+            {
+                return value2;
+            }
+            
+        }else
+        {
+            return value1;
+        }
     }
 }
