@@ -44,6 +44,8 @@ public class Main
         // CODE FOR ALERT ENGINE
         
     }
+    
+    //METHOD FOR WRITING TO LOG FILE
     public static void WriteToLog()
     {
         //try to write stuff to log
@@ -96,9 +98,17 @@ public class Main
             double speedStandardDev = 2;//vehicle.speedStandardDev
             double roadLength = 10;
             System.out.println("Number of Vehicles of Type (include name here) " + numberOfVehicles);
+            
+            //determine format of registration
+            String regoFormat = "LLDD";//just an example - need to get this from the input later
+            //NOTE TO SELF - SET PARKING SPACES ARRAY TIMES TO ZERO
+            int availableParking = 10; //or whatever it is from initial input
+            
             //for each vehicle of this type, generate data
             for(int i=0;i<numberOfVehicles;i++)
             {
+                //generate registration plate
+                String Registration = GenerateRego(regoFormat, dayNumber);
                 //vehicle name
                 String VName = "asdf";//vehicle.Name
                 //get speed of vehicle first (gaussian random speed)
@@ -147,12 +157,14 @@ public class Main
                     parkEndTime=0;
                 }
                 
+                //NOTE TO SELF - check if parking spaces are available - might need to do some sorting
+                
                 //initialise a VehicleData object
                 VehicleData a = new VehicleData(VName,arrivalTime,
                                                 departureTime,EndRoadD,
                                                 parking,parkSTime,
                                                 parkEndTime,speed,
-                                                dayNumber);
+                                                dayNumber, Registration);
                 //add object to the list
                 GeneratedDataList.add(a);
             }
@@ -183,6 +195,44 @@ public class Main
         //System.out.println("FinalTime: " + FinalTime);
         return FinalTime;
     }
+    //NOTE TO SELF: double check this in netbeans to make sure it isn't buggy
+    public static String GenerateRego(String format, int dayNumber)
+    {
+        int length = format.length();
+        String temp = "";
+        //convert format to lower case
+        format = format.toLowerCase();
+        
+        //set of letters to choose from
+        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //char to store letter in
+        char tempLetter;
+        //int to store digit in
+        int tempDigit;
+        //go through format and generate rego
+        for (int i=0; i>length;i++)
+        {
+            if(format.charAt(i)=='l')
+            {
+                //do something to get a random letter, preferrably upper case
+                //get random int within range of alphabet
+                //set tempLetter to equal thingy in string
+                
+                //concat it to temp
+            }else if(format.charAt(i)=='d')
+            {
+                //do something to get a random digit
+                tempDigit = 0;
+                //concat it to temp and convert digit to string
+                temp = temp + Integer.toString(tempDigit);
+            }
+        }
+        //check if rego already exists
+        //linear search through array list, if day number and rego are the same, panic
+        //or just call this method again?
+        //holy cow i hope this doesn't infinite loop
+        return temp;
+    }
     
 }
 
@@ -200,6 +250,7 @@ class VehicleData implements Comparable<VehicleData>
     public int DepartureTime;
     public double Speed;
     public int DayNumber;
+    public String Registration;
     
     //default constructor
     public VehicleData()
@@ -213,12 +264,13 @@ class VehicleData implements Comparable<VehicleData>
         DepartureTime = 0;
         Speed = 0;
         DayNumber = 0;
+        Registration = "";
     }
     //constructor
     public VehicleData(String VehicleName, int ArrivalTime, 
                        int DepartureTime, boolean EndRoadDeparture, 
                        boolean Parking, int ParkingStartTime, 
-                       int ParkingStopTime, double Speed, int DayNumber)
+                       int ParkingStopTime, double Speed, int DayNumber, String Registration)
     {
         this.VehicleName = VehicleName;
         this.ArrivalTime = ArrivalTime;
@@ -229,6 +281,7 @@ class VehicleData implements Comparable<VehicleData>
         this.ParkingStopTime = ParkingStopTime;
         this.Speed = Speed;
         this.DayNumber = DayNumber;
+        this.Registration = Registration
     }
     @Override
     public int compareTo(VehicleData v)
