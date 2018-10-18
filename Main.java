@@ -3,7 +3,11 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.io.*;
 import java.nio.*;
-public class Main 
+/**
+ *
+ * @author Julia-Olym Zhang
+ */
+public class Main
 {
     //global variable, for storing all generated data
     public static List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
@@ -27,8 +31,68 @@ public class Main
         }
         //sort generateddatalist
         Collections.sort(GeneratedDataList);
+        //MANAGE PARKING SPACES HERE
+        int availableParking = 10; //or whatever it is from initial input
+        //make array of available parking spaces
+        int[] parkingSpaces = new int[availableParking];//parking spaces stores the last time it is occupied
+        //set parking spaces to zero
+        for (int i=0;i<availableParking;i++)
+        {
+            parkingSpaces[i]=0;
+        }
+        //create temporary variables to hold day numbers
+        int prevDay, currentDay;
+        prevDay=0;
+        //loop through generated data (separated by day)
+        for(VehicleData v: GeneratedDataList)
+        {
+            //set current day number
+            currentDay=v.DayNumber;
+            //first of all check if previous day num==current day num
+            if(currentDay!=prevDay)
+            {//if not, reset parking spaces for a new day
+                for (int i=0;i<availableParking;i++)
+                {
+                    parkingSpaces[i]=0;
+                }
+            }
+            //process parking...
+            int counter=0;
+            //search through array to see if there are available spaces
+            for (int i=0;i<availableParking;i++)
+            {
+                if(v.ParkingStartTime>parkingSpaces[i])
+                {
+                    parkingSpaces[i]=v.ParkingStopTime;
+                    v.Parking = true;
+                    break;
+                }else
+                {
+                    counter++;
+                }
+            }
+            if(counter>=availableParking)
+            {//if loop has gone through without a parking space
+                //change values of this vehicle so that it doesn't park
+                v.Parking = false;
+                //v.ParkingStartTime=0;
+                //v.ParkingStopTime=0;
+            }
+            //set prevDay number
+            prevDay=v.DayNumber;
+        }
+        //double check that vehicles with false for parking do not have parking times
+        for(VehicleData d: GeneratedDataList)
+        {
+            if(d.Parking==false)
+            {
+                d.ParkingStartTime = 0;
+                d.ParkingStopTime = 0;
+            }
+        }
         //call WriteToLog to write in entries
         WriteToLog();
+        
         
         
         
@@ -82,46 +146,49 @@ public class Main
     }
     
     public static void ActivityEngine(int dayNumber)//activity engine should take stats list as parameter as well
-    {
-        //for(vehiclestats vehicle : vehiclestats)//for every vehicle in the list of vehicle statistics
+    {//this generates the vehicles for a single day
+        //for(vehiclestats vehicle : vehiclestats)//for every vehicle in the list of vehicle statistics INITIAL INPUT
         //{
             //declare variable for number of vehicles
             int numberOfVehicles;
             //set standard dev and mean for num of vehicles
-            double numStandardDev = 2;//vehicle.NumberStandardDev
-            double numMean = 5;//vehicle.NumberMean
+            double numStandardDev = 2;//vehicle.NumberStandardDev INITIAL INPUT
+            double numMean = 5;//vehicle.NumberMean INITIAL INPUT
             //generate random number of vehicles for this one
             Random r = new Random();
             numberOfVehicles = (int) Math.round(r.nextGaussian()*numStandardDev + numMean);
             //also get the speed mean to help generate times later
-            double speedMean = 50;//vehicle.speedMean
-            double speedStandardDev = 2;//vehicle.speedStandardDev
-            double roadLength = 10;
-            System.out.println("Number of Vehicles of Type (include name here) " + numberOfVehicles);
-            
+            double speedMean = 50;//vehicle.speedMean INITIAL INPUT
+            double speedStandardDev = 2;//vehicle.speedStandardDev INITIAL INPUT
+            double roadLength = 10;//INITIAL INPUT
+            String VName = "asdf";//vehicle.Name INITIAL INPUT
+            System.out.println("Number of Vehicles of Type '"+VName+"': " + numberOfVehicles);
+            //first check if parking flag from car stats allows for parking
+            int parkingAllowed = 1;//take value from parking flag from INITIAL INPUT
             //determine format of registration
-            String regoFormat = "LLDD";//just an example - need to get this from the input later
-            //NOTE TO SELF - SET PARKING SPACES ARRAY TIMES TO ZERO
-            int availableParking = 10; //or whatever it is from initial input
-            
+            String regoFormat = "LLDD";//just an example - need to get this from the INITIAL input later
+                        
             //for each vehicle of this type, generate data
             for(int i=0;i<numberOfVehicles;i++)
             {
                 //generate registration plate
                 String Registration = GenerateRego(regoFormat, dayNumber);
                 //vehicle name
-                String VName = "asdf";//vehicle.Name
+
                 //get speed of vehicle first (gaussian random speed)
                 double speed = r.nextGaussian()*speedStandardDev + speedMean;
                 //average length of time spent on the road in minutes:
                 int avTimeOnRoad = (int) Math.round( roadLength/(speed/60) );
-                //get time in minutes (arrival and departure)
+                //get time in minutes (arrival only)
                 int aTimeMin = ThreadLocalRandom.current().nextInt(0,1380+1);//1380 = 23*60
+                
+                
+                
+                
                 int dTimeMin = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1);//max time is min+time on road
-                //arrival time, convert minutes to hrs and minutes
-                int arrivalTime = ConvertMinutesToHrsMin(aTimeMin);
-                //departuretime
-                int departureTime = ConvertMinutesToHrsMin(dTimeMin);
+                
+                
+                
                 //EndRoadDeparture
                 boolean EndRoadD;
                 //get random number (1 or 0) to decide true or false for EndRoadDeparture
@@ -135,30 +202,53 @@ public class Main
                     EndRoadD = true;
                 }
                 //parking bool
-                int ranNum1 = ThreadLocalRandom.current().nextInt(0,1+1);
                 boolean parking;
-                //System.out.println("True or false: "+ranNum1);
-                if(ranNum1==0)
-                {
-                    parking = false;
-                }else
-                {
-                    parking = true;
-                }
                 //parking start time and stop time
                 int parkSTime,parkEndTime;
-                if(parking==true)
-                {//set up parking times
-                    parkSTime = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1); 
-                    parkEndTime = ThreadLocalRandom.current().nextInt(parkSTime,aTimeMin+avTimeOnRoad+1);
+                if(parkingAllowed==1)
+                {//if parking is allowed
+                    int ranNum1 = ThreadLocalRandom.current().nextInt(0,1+1);
+                    
+                    //System.out.println("True or false: "+ranNum1);
+                    if(ranNum1==0)
+                    {
+                        parking = false;
+                    }else
+                    {
+                        parking = true;
+                    }
+                    
+                    if(parking==true)
+                    {//set up parking times
+                        parkSTime = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1); 
+                        parkEndTime = ThreadLocalRandom.current().nextInt(parkSTime,aTimeMin+avTimeOnRoad+15);//up to 15 mins parking
+                        //redo departure time
+                        dTimeMin = ThreadLocalRandom.current().nextInt(aTimeMin,parkEndTime+1);
+                    }else
+                    {//set parking times to 0
+                        parkSTime = 0;
+                        parkEndTime=0;
+                    }
                 }else
-                {//set parking times to 0
+                {//vehicle is not allowed to park at all
+                    parking=false;
+                    //don't generate parking times
                     parkSTime = 0;
                     parkEndTime=0;
                 }
                 
-                //NOTE TO SELF - check if parking spaces are available - might need to do some sorting
                 
+                //also check if departure exceeds 1440 (a whole 24 hours)
+                if(dTimeMin>=1440)
+                {
+                    //departure time is past midnight, so it is set to midnight
+                    //i.e. it disappears at midnight
+                    dTimeMin=1440;
+                }
+                //arrival time, convert minutes to readable string format
+                String arrivalTime = ConvertMinutesToHrsMin(aTimeMin);
+                //do the same for departuretime
+                String departureTime = ConvertMinutesToHrsMin(dTimeMin);
                 //initialise a VehicleData object
                 VehicleData a = new VehicleData(VName,arrivalTime,
                                                 departureTime,EndRoadD,
@@ -172,22 +262,36 @@ public class Main
         //}
     }
     
-    public static int ConvertMinutesToHrsMin(int minutes)
+    public static String ConvertMinutesToHrsMin(int minutes)
     {
         //System.out.println("Minutes is " + minutes);
+        String FinalTime,strH,strM;
         //convert
         int Hours = minutes / 60;
         int Min = minutes % 60;
-        Hours = Hours * 100;
-        int FinalTime = Hours + Min;
-        //System.out.println("In HH:MM we have " + FinalTime);
+        if(Hours<10)
+        {
+            strH = "0" + Integer.toString(Hours);
+        }else
+        {
+            strH = Integer.toString(Hours);
+        }
+        
+        if(Min<10)
+        {
+            strM = "0"+Integer.toString(Min);
+        }else
+        {
+            strM = Integer.toString(Min);
+        }
+        FinalTime=strH+strM;
+        //System.out.println("In HHMM we have " + FinalTime);
         return FinalTime;
     }
-    public static int ConvertHHMMToMinutes(int time)
+    public static int ConvertHHMMToMinutes(String time)
     {
-        String strTime = Integer.toString(time);
-        String Hr = strTime.substring(0,2);
-        String Min = strTime.substring(2,4);
+        String Hr = time.substring(0,2);
+        String Min = time.substring(2,4);
         //System.out.println(Hr + " : " + Min);
         int hour = Integer.parseInt(Hr);
         int minute = Integer.parseInt(Min);
@@ -204,33 +308,52 @@ public class Main
         format = format.toLowerCase();
         
         //set of letters to choose from
-        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZA";
         //char to store letter in
         char tempLetter;
         //int to store digit in
         int tempDigit;
+        String str;
         //go through format and generate rego
-        for (int i=0; i>length;i++)
+        for (int i=0; i<length;i++)
         {
-            if(format.charAt(i)=='l')
-            {
+            str = Character.toString(format.charAt(i));
+            if(str.equals("l"))
+            {                
                 //do something to get a random letter, preferrably upper case
                 //get random int within range of alphabet
+                int position = ThreadLocalRandom.current().nextInt(0,25+1);
+
                 //set tempLetter to equal thingy in string
-                
+                tempLetter=letters.charAt(position);
                 //concat it to temp
-            }else if(format.charAt(i)=='d')
+                temp = temp + Character.toString(tempLetter);
+            }else if(str.equals("d"))
             {
                 //do something to get a random digit
-                tempDigit = 0;
+                tempDigit = ThreadLocalRandom.current().nextInt(0,9+1);;
                 //concat it to temp and convert digit to string
                 temp = temp + Integer.toString(tempDigit);
             }
         }
+        boolean alreadyExists = false;
         //check if rego already exists
-        //linear search through array list, if day number and rego are the same, panic
-        //or just call this method again?
-        //holy cow i hope this doesn't infinite loop
+        for(VehicleData d : GeneratedDataList)
+        {
+            if(dayNumber == d.DayNumber && temp.equals(d.Registration))
+            {//same day, same car shows up twice
+                alreadyExists = true;
+            }
+        }
+        //linear search through array list, if day number and rego are the same
+        //call this method again
+        if(alreadyExists==true)
+        {
+            System.out.println("Vehicle appears twice - generating new registration plate");
+            GenerateRego(format,dayNumber);
+        }
+
+        System.out.println(temp);
         return temp;
     }
     
@@ -242,12 +365,12 @@ public class Main
 class VehicleData implements Comparable<VehicleData>
 {
     public String VehicleName;
-    public int ArrivalTime;//time is in HHMM
+    public String ArrivalTime;//time is in HHMM
     public boolean EndRoadDeparture;//true if the vehicle departs via end road
     public boolean Parking;//true if vehicle parks at some point
     public int ParkingStartTime;//set to 0 if boolean is false
     public int ParkingStopTime;//set to 0 if boolean is false
-    public int DepartureTime;
+    public String DepartureTime;
     public double Speed;
     public int DayNumber;
     public String Registration;
@@ -256,19 +379,19 @@ class VehicleData implements Comparable<VehicleData>
     public VehicleData()
     {
         VehicleName = "";
-        ArrivalTime = 0;
+        ArrivalTime = "";
         EndRoadDeparture = true;
         Parking = false;//assumes no parking
         ParkingStartTime = 0;
         ParkingStopTime = 0;
-        DepartureTime = 0;
+        DepartureTime = "";
         Speed = 0;
         DayNumber = 0;
         Registration = "";
     }
     //constructor
-    public VehicleData(String VehicleName, int ArrivalTime, 
-                       int DepartureTime, boolean EndRoadDeparture, 
+    public VehicleData(String VehicleName, String ArrivalTime, 
+                       String DepartureTime, boolean EndRoadDeparture, 
                        boolean Parking, int ParkingStartTime, 
                        int ParkingStopTime, double Speed, int DayNumber, String Registration)
     {
@@ -281,7 +404,7 @@ class VehicleData implements Comparable<VehicleData>
         this.ParkingStopTime = ParkingStopTime;
         this.Speed = Speed;
         this.DayNumber = DayNumber;
-        this.Registration = Registration
+        this.Registration = Registration;
     }
     @Override
     public int compareTo(VehicleData v)
@@ -291,7 +414,7 @@ class VehicleData implements Comparable<VehicleData>
         if(value1==0)
         {//if same day
             //compare by arrival time
-            int value2 = this.ArrivalTime - v.ArrivalTime;
+            int value2 = this.ArrivalTime.compareTo(v.ArrivalTime);
             
             if(value2==0)
             {//if same arrival time
