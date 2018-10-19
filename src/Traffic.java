@@ -120,11 +120,6 @@ public class Traffic {
 
     }
 
-    public static void main(String[] args) {
-        Traffic a = new Traffic();
-        a.readFile(args);
-    }
-
     public Vehicle[] getVehicleList() {
         return vehicleList;
     }
@@ -135,5 +130,26 @@ public class Traffic {
 
     public int getDays() {
         return days;
+    }
+
+    public int getNumberOfVehicles() {
+        return numberOfVehicles;
+    }
+
+    public int getRoadLength() {
+        return roadLength;
+    }
+
+    public int getSpeedLimit() {
+        return speedLimit;
+    }
+
+    public int getParkingSpaceAvailable() {
+        return parkingSpaceAvailable;
+    }
+
+    public static void main(String[] args) {
+        Traffic a = new Traffic();
+        a.readFile(args);
     }
 }
