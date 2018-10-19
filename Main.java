@@ -12,82 +12,106 @@ public class Main
     public static void main(String[] args) 
     {
         // CODE FOR INITIAL INPUT
-        
-        
-        
-        
-        
-        // CODE FOR ACTIVITY ENGINE AND LOGS
-        int daysToSimulate = 10;//get this later from initial input
-        //call ActivityEngine, for each day
-        for (int i=0;i<daysToSimulate;i++)
-        {
-            System.out.println("Starting Simulation for Day " + (i+1));
-            ActivityEngine(i+1);//activity engine should take a list (maybe an array?) of input stats as well as day number
-        }
-        //sort generateddatalist
-        Collections.sort(GeneratedDataList);
-        //MANAGE PARKING SPACES HERE
-        int availableParking = 10; //or whatever it is from initial input
-        //make array of available parking spaces
-        int[] parkingSpaces = new int[availableParking];//parking spaces stores the last time it is occupied
-        //set parking spaces to zero
-        for (int i=0;i<availableParking;i++)
-        {
-            parkingSpaces[i]=0;
-        }
-        //create temporary variables to hold day numbers
-        int prevDay, currentDay;
-        prevDay=0;
-        //loop through generated data (separated by day)
-        for(VehicleData v: GeneratedDataList)
-        {
-            //set current day number
-            currentDay=v.DayNumber;
-            //first of all check if previous day num==current day num
-            if(currentDay!=prevDay)
-            {//if not, reset parking spaces for a new day
-                for (int i=0;i<availableParking;i++)
-                {
-                    parkingSpaces[i]=0;
-                }
+        try {
+            String vehicleFileName = args[0];
+            String statFileName = args[1];
+            String days = args[2];
+            int numOfDays = Integer.parseInt(days);
+            Traffic a = new Traffic(vehicleFileName,statFileName,numOfDays);
+            //and then to get the vehicle list and stats list
+            Vehicle[] v = a.getVehicleList();
+            Stats[] VehicleStats = a.getStatsList();
+            int roadLength = a.getRoadLength();
+            
+            
+            // CODE FOR ACTIVITY ENGINE AND LOGS
+            //call ActivityEngine, for each day
+            for (int i=0;i<numOfDays;i++)
+            {
+                System.out.println("Starting Simulation for Day " + (i+1));
+                //takes parameters vehicle[], stats[], day number, road length
+                ActivityEngine(v,VehicleStats,i+1,roadLength);
             }
-            //process parking...
-            int counter=0;
-            //search through array to see if there are available spaces
+            //sort generateddatalist
+            Collections.sort(GeneratedDataList);
+            //MANAGE PARKING SPACES HERE
+            int availableParking = a.getParkingSpaceAvailable();
+            //make array of available parking spaces
+            int[] parkingSpaces = new int[availableParking];//parking spaces stores the last time it is occupied
+            //set parking spaces to zero
             for (int i=0;i<availableParking;i++)
             {
-                if(v.ParkingStartTime>parkingSpaces[i])
+                parkingSpaces[i]=0;
+            }
+            //create temporary variables to hold day numbers
+            int prevDay, currentDay;
+            prevDay=0;
+            //loop through generated data (separated by day)
+            for(VehicleData c: GeneratedDataList)
+            {
+                //set current day number
+                currentDay=c.DayNumber;
+                //first of all check if previous day num==current day num
+                if(currentDay!=prevDay)
+                {//if not, reset parking spaces for a new day
+                    for (int i=0;i<availableParking;i++)
+                    {
+                        parkingSpaces[i]=0;
+                    }
+                }
+                //process parking...
+                int counter=0;
+                //search through array to see if there are available spaces
+                for (int i=0;i<availableParking;i++)
                 {
-                    parkingSpaces[i]=v.ParkingStopTime;
-                    v.Parking = true;
-                    break;
-                }else
+                    if(c.ParkingStartTime>parkingSpaces[i])
+                    {
+                        parkingSpaces[i]=c.ParkingStopTime;
+                        c.Parking = true;
+                        break;
+                    }else
+                    {
+                        counter++;
+                    }
+                }
+                if(counter>=availableParking)
+                {//if loop has gone through without a parking space
+                    //change values of this vehicle so that it doesn't park
+                    c.Parking = false;
+                    //c.ParkingStartTime=0;
+                    //c.ParkingStopTime=0;
+                }
+                //set prevDay number
+                prevDay=c.DayNumber;
+            }
+            //double check that vehicles with false for parking do not have parking times
+            for(VehicleData d: GeneratedDataList)
+            {
+                if(d.Parking==false)
                 {
-                    counter++;
+                    d.ParkingStartTime = 0;
+                    d.ParkingStopTime = 0;
                 }
             }
-            if(counter>=availableParking)
-            {//if loop has gone through without a parking space
-                //change values of this vehicle so that it doesn't park
-                v.Parking = false;
-                //v.ParkingStartTime=0;
-                //v.ParkingStopTime=0;
-            }
-            //set prevDay number
-            prevDay=v.DayNumber;
+            //call WriteToLog to write in entries
+            WriteToLog();
+            
+            
+            
+            
+            
+            
+            
+            
         }
-        //double check that vehicles with false for parking do not have parking times
-        for(VehicleData d: GeneratedDataList)
-        {
-            if(d.Parking==false)
-            {
-                d.ParkingStartTime = 0;
-                d.ParkingStopTime = 0;
-            }
+        catch (Exception ex) {
+            System.out.println(ex);
         }
-        //call WriteToLog to write in entries
-        WriteToLog();
+        
+        
+        
+        
+        
         
         
         
@@ -161,29 +185,40 @@ public class Main
         }
     }
     
-    public static void ActivityEngine(int dayNumber)//activity engine should take stats list as parameter as well
+    public static void ActivityEngine(Vehicle[] vStats,Stats[] VehicleStats, int dayNumber,int road)//activity engine should take stats list as parameter as well
     {//this generates the vehicles for a single day
-        //for(vehiclestats vehicle : vehiclestats)//for every vehicle in the list of vehicle statistics INITIAL INPUT
-        //{
+        double roadLength = Double.valueOf(road);
+        for(Stats vehicle : VehicleStats)
+        {//for every vehicle in the list of vehicle statistics
             //declare variable for number of vehicles
             int numberOfVehicles;
             //set standard dev and mean for num of vehicles
-            double numStandardDev = 2;//vehicle.NumberStandardDev INITIAL INPUT
-            double numMean = 5;//vehicle.NumberMean INITIAL INPUT
+            double numStandardDev = vehicle.numberStandardDeviation;
+            double numMean = vehicle.numberMean;
             //generate random number of vehicles for this one
             Random r = new Random();
             numberOfVehicles = (int) Math.round(r.nextGaussian()*numStandardDev + numMean);
             //also get the speed mean to help generate times later
-            double speedMean = 50;//vehicle.speedMean INITIAL INPUT
-            double speedStandardDev = 2;//vehicle.speedStandardDev INITIAL INPUT
-            double roadLength = 10;//INITIAL INPUT
-            String VName = "asdf";//vehicle.Name INITIAL INPUT
+            double speedMean = vehicle.speedMean;
+            double speedStandardDev = vehicle.speedStandardDeviation;
+            //vehicle name
+            String VName = vehicle.name;
             System.out.println("Number of Vehicles of Type '"+VName+"': " + numberOfVehicles);
             //first check if parking flag from car stats allows for parking
-            int parkingAllowed = 1;//take value from parking flag from INITIAL INPUT
+            boolean parkingAllowed = false;//set to false as default
             //determine format of registration
-            String regoFormat = "LLDD";//just an example - need to get this from the INITIAL input later
-                        
+            String regoFormat = "LLDD";//just an example, set to proper value later
+            //loop through Vehicle[] until name matches each other
+            for(Vehicle ve:vStats)
+            {
+                if(VName.compareTo(ve.name)==0)
+                {
+                    //set parking and regoFormat
+                    parkingAllowed = ve.parkingFlag;
+                    regoFormat = ve.registrationForm;
+                }
+            }
+            
             //for each vehicle of this type, generate data
             for(int i=0;i<numberOfVehicles;i++)
             {
@@ -200,7 +235,7 @@ public class Main
                 
                 
                 //departure time
-                int dTimeMin = (int) Math.round(r.nextGaussian()*speedStandardDev + (avTimeOnRoad+aTimeMin+15));
+                int dTimeMin = (int) Math.round(r.nextGaussian() + (avTimeOnRoad+aTimeMin));
                 
                 
                 
@@ -219,7 +254,7 @@ public class Main
                 boolean parking;
                 //parking start time and stop time
                 int parkSTime,parkEndTime;
-                if(parkingAllowed==1)
+                if(parkingAllowed)
                 {//if parking is allowed
                     //set randum number1 to see if this vehicle will park
                     int ranNum1 = ThreadLocalRandom.current().nextInt(0,1+1);
@@ -237,7 +272,7 @@ public class Main
                         parkSTime = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1); 
                         parkEndTime = ThreadLocalRandom.current().nextInt(parkSTime,parkSTime+15);//up to 15 mins parking
                         //redo departure time 
-                        dTimeMin = (int) Math.round(r.nextGaussian()*speedStandardDev + (aTimeMin+parkEndTime+15));
+                        dTimeMin = (int) Math.round(r.nextGaussian() + (aTimeMin+parkEndTime));
                     }else
                     {//set parking times to 0
                         parkSTime = 0;
@@ -259,6 +294,11 @@ public class Main
                     //i.e. it disappears at midnight
                     dTimeMin=1440;
                 }
+                //check if departure time is smaller than parking time
+                if(dTimeMin<=parkEndTime)
+                {
+                    dTimeMin = parkEndTime+2;
+                }
                 //arrival time, convert minutes to readable string format
                 String arrivalTime = ConvertMinutesToHrsMin(aTimeMin);
                 //do the same for departuretime
@@ -277,7 +317,7 @@ public class Main
                 GeneratedDataList.add(a);
             }
                 
-        //}
+        }
     }
     
     public static String ConvertMinutesToHrsMin(int minutes)
