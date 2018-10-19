@@ -9,6 +9,7 @@ public class Traffic {
     private int stats_vehicleCount, roadLength, speedLimit, parkingSpaceAvailable;
     private Stats[] statsList;
 
+    private int days;
     /*
         ----------------------------------------------------------
         Read vehicles.txt
@@ -90,17 +91,49 @@ public class Traffic {
         }
     }
 
-    public static void main(String[] args) {
-        Traffic a = new Traffic();
+    public void readFile(String[] args) {
         try {
             String vehicleFileName = args[0];
             String statFileName = args[1];
             String days = args[2];
-            a.readVehicleFile(vehicleFileName);
-            a.readStatsFile(statFileName);
+            this.days = Integer.parseInt(days);
+            readVehicleFile(vehicleFileName);
+            readStatsFile(statFileName);
         }
         catch (Exception ex) {
             System.exit(1);
         }
+    }
+
+    public Traffic(String vehicleFileName, String statFileName, int days) {
+        try {
+            readVehicleFile(vehicleFileName);
+            readStatsFile(statFileName);
+            this.days = days;
+        }
+        catch (Exception ex) {
+            System.exit(1);
+        }
+    }
+
+    public Traffic() {
+
+    }
+
+    public static void main(String[] args) {
+        Traffic a = new Traffic();
+        a.readFile(args);
+    }
+
+    public Vehicle[] getVehicleList() {
+        return vehicleList;
+    }
+
+    public Stats[] getStatsList() {
+        return statsList;
+    }
+
+    public int getDays() {
+        return days;
     }
 }
