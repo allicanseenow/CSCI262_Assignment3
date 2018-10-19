@@ -133,13 +133,14 @@ public class Main
                 out.write(":ParkStart:"+v.ParkingStartTime);
                 out.write(":ParkEnd:"+v.ParkingStopTime);
                 out.write(":Speed:"+v.Speed);
+                out.write(":FinalSpeed:"+v.FinalSpeed);
                 out.write("\n");
                 //log file entries are as below
-                //Day:XX:VType:XX:ArrTime:XX:DepTime:XX:Parking:y/n:ParkStart:XX:ParkEnd:XX:Speed:XX
+                //Day:XX:VType:XX:ArrTime:XX:DepTime:XX:Parking:y/n:ParkStart:XX:ParkEnd:XX:Speed:XX:FinalSpeed:XX
                 
             }
             out.close();
-        }catch(IOException e)
+        }catch(Exception e)//Exception is for general exceptions
         {
             System.out.println(e);
         }
@@ -183,9 +184,11 @@ public class Main
                 int aTimeMin = ThreadLocalRandom.current().nextInt(0,1380+1);//1380 = 23*60
                 
                 
+                //FIX THIS UP - might need to readjust time for departure
                 
-                
-                int dTimeMin = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1);//max time is min+time on road
+                //int dTimeMin = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1);//max time is min+time on road
+                //a possible fix below:
+                int dTimeMin = (int) Math.round(r.nextGaussian() + (avTimeOnRoad+aTimeMin));
                 
                 
                 
@@ -249,12 +252,14 @@ public class Main
                 String arrivalTime = ConvertMinutesToHrsMin(aTimeMin);
                 //do the same for departuretime
                 String departureTime = ConvertMinutesToHrsMin(dTimeMin);
+                double FinalSpeed = roadLength/((dTimeMin - aTimeMin)/60);//divid by 60 to get in km/hr
                 //initialise a VehicleData object
                 VehicleData a = new VehicleData(VName,arrivalTime,
                                                 departureTime,EndRoadD,
                                                 parking,parkSTime,
                                                 parkEndTime,speed,
-                                                dayNumber, Registration);
+                                                dayNumber, Registration,
+                                                FinalSpeed);
                 //add object to the list
                 GeneratedDataList.add(a);
             }
@@ -299,7 +304,6 @@ public class Main
         //System.out.println("FinalTime: " + FinalTime);
         return FinalTime;
     }
-    //NOTE TO SELF: double check this in netbeans to make sure it isn't buggy
     public static String GenerateRego(String format, int dayNumber)
     {
         int length = format.length();
@@ -370,10 +374,11 @@ class VehicleData implements Comparable<VehicleData>
     public boolean Parking;//true if vehicle parks at some point
     public int ParkingStartTime;//set to 0 if boolean is false
     public int ParkingStopTime;//set to 0 if boolean is false
-    public String DepartureTime;
-    public double Speed;
-    public int DayNumber;
-    public String Registration;
+    public String DepartureTime;//departure time in HHMM
+    public double Speed;//km/hr
+    public int DayNumber;//which day it is
+    public String Registration;//rego number
+    public double FinalSpeed;//km/hr
     
     //default constructor
     public VehicleData()
@@ -388,12 +393,13 @@ class VehicleData implements Comparable<VehicleData>
         Speed = 0;
         DayNumber = 0;
         Registration = "";
+        FinalSpeed = 0;
     }
     //constructor
     public VehicleData(String VehicleName, String ArrivalTime, 
                        String DepartureTime, boolean EndRoadDeparture, 
                        boolean Parking, int ParkingStartTime, 
-                       int ParkingStopTime, double Speed, int DayNumber, String Registration)
+                       int ParkingStopTime, double Speed, int DayNumber, String Registration, double FinalSpeed)
     {
         this.VehicleName = VehicleName;
         this.ArrivalTime = ArrivalTime;
@@ -405,6 +411,7 @@ class VehicleData implements Comparable<VehicleData>
         this.Speed = Speed;
         this.DayNumber = DayNumber;
         this.Registration = Registration;
+        this.FinalSpeed = FinalSpeed;
     }
     @Override
     public int compareTo(VehicleData v)
