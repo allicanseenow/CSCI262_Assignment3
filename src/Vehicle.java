@@ -1,9 +1,9 @@
 public class Vehicle {
-    private String name;
-    private boolean parkingFlag;
-    private String registrationForm;
-    private int volume;
-    private int speed;
+    public String name;
+    public boolean parkingFlag;
+    public String registrationForm;
+    public int volume;
+    public int speed;
 
     public Vehicle(String name, boolean parkingFlag, String registrationForm, int volume, int speed) {
         this.name = name;

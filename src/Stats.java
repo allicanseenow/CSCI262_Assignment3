@@ -1,9 +1,9 @@
 public class Stats {
-    private String name;
-    private double numberMean;
-    private double numberStandardDeviation;
-    private double speedMean;
-    private double speedStandardDeviation;
+    public String name;
+    public double numberMean;
+    public double numberStandardDeviation;
+    public double speedMean;
+    public double speedStandardDeviation;
 
     public Stats(String a, double b1, double b2, double c1, double c2) {
         name = a;
