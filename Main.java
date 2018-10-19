@@ -3,13 +3,9 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.io.*;
 import java.nio.*;
-/**
- *
- * @author Julia-Olym Zhang
- */
-public class Main
+public class Main 
 {
-    //global variable, for storing all generated data
+     //global variable, for storing all generated data
     public static List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
     //variable for log file name
     public static String LogFileName = "log.txt";
@@ -27,7 +23,7 @@ public class Main
         for (int i=0;i<daysToSimulate;i++)
         {
             System.out.println("Starting Simulation for Day " + (i+1));
-            ActivityEngine(i+1);//activity engine should take a list of input stats as well as day number
+            ActivityEngine(i+1);//activity engine should take a list (maybe an array?) of input stats as well as day number
         }
         //sort generateddatalist
         Collections.sort(GeneratedDataList);
@@ -138,6 +134,25 @@ public class Main
                 //log file entries are as below
                 //Day:XX:VType:XX:ArrTime:XX:DepTime:XX:Parking:y/n:ParkStart:XX:ParkEnd:XX:Speed:XX:FinalSpeed:XX
                 
+                System.out.print("Day:"+v.DayNumber);
+                System.out.print(":VType:"+v.VehicleName);
+                System.out.print(":ArrTime:"+v.ArrivalTime);
+                System.out.print(":DepTime:"+v.DepartureTime);
+                if(v.Parking==true)
+                {
+                    System.out.print(":Parking:y");
+                }else
+                {
+                    System.out.print(":Parking:n");
+                }
+                System.out.print(":ParkStart:"+v.ParkingStartTime);
+                System.out.print(":ParkEnd:"+v.ParkingStopTime);
+                System.out.print(":Speed:"+v.Speed);
+                System.out.print(":FinalSpeed:"+v.FinalSpeed);
+                System.out.println();
+                
+                
+                
             }
             out.close();
         }catch(Exception e)//Exception is for general exceptions
@@ -184,11 +199,8 @@ public class Main
                 int aTimeMin = ThreadLocalRandom.current().nextInt(0,1380+1);//1380 = 23*60
                 
                 
-                //FIX THIS UP - might need to readjust time for departure
-                
-                //int dTimeMin = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1);//max time is min+time on road
-                //a possible fix below:
-                int dTimeMin = (int) Math.round(r.nextGaussian() + (avTimeOnRoad+aTimeMin));
+                //departure time
+                int dTimeMin = (int) Math.round(r.nextGaussian()*speedStandardDev + (avTimeOnRoad+aTimeMin+15));
                 
                 
                 
@@ -196,7 +208,6 @@ public class Main
                 boolean EndRoadD;
                 //get random number (1 or 0) to decide true or false for EndRoadDeparture
                 int ranNum = ThreadLocalRandom.current().nextInt(0,1+1);
-                //System.out.println("True or false: "+ranNum);
                 if(ranNum==0)
                 {
                     EndRoadD = false;
@@ -210,9 +221,9 @@ public class Main
                 int parkSTime,parkEndTime;
                 if(parkingAllowed==1)
                 {//if parking is allowed
+                    //set randum number1 to see if this vehicle will park
                     int ranNum1 = ThreadLocalRandom.current().nextInt(0,1+1);
                     
-                    //System.out.println("True or false: "+ranNum1);
                     if(ranNum1==0)
                     {
                         parking = false;
@@ -224,9 +235,9 @@ public class Main
                     if(parking==true)
                     {//set up parking times
                         parkSTime = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1); 
-                        parkEndTime = ThreadLocalRandom.current().nextInt(parkSTime,aTimeMin+avTimeOnRoad+15);//up to 15 mins parking
-                        //redo departure time
-                        dTimeMin = ThreadLocalRandom.current().nextInt(aTimeMin,parkEndTime+1);
+                        parkEndTime = ThreadLocalRandom.current().nextInt(parkSTime,parkSTime+15);//up to 15 mins parking
+                        //redo departure time 
+                        dTimeMin = (int) Math.round(r.nextGaussian()*speedStandardDev + (aTimeMin+parkEndTime+15));
                     }else
                     {//set parking times to 0
                         parkSTime = 0;
@@ -252,7 +263,9 @@ public class Main
                 String arrivalTime = ConvertMinutesToHrsMin(aTimeMin);
                 //do the same for departuretime
                 String departureTime = ConvertMinutesToHrsMin(dTimeMin);
-                double FinalSpeed = roadLength/((dTimeMin - aTimeMin)/60);//divid by 60 to get in km/hr
+                //calculate average speed over road
+                double hoursSpent = (Double.valueOf(dTimeMin) - Double.valueOf(aTimeMin))/60;
+                double FinalSpeed = roadLength/hoursSpent;
                 //initialise a VehicleData object
                 VehicleData a = new VehicleData(VName,arrivalTime,
                                                 departureTime,EndRoadD,
@@ -269,7 +282,6 @@ public class Main
     
     public static String ConvertMinutesToHrsMin(int minutes)
     {
-        //System.out.println("Minutes is " + minutes);
         String FinalTime,strH,strM;
         //convert
         int Hours = minutes / 60;
@@ -290,18 +302,15 @@ public class Main
             strM = Integer.toString(Min);
         }
         FinalTime=strH+strM;
-        //System.out.println("In HHMM we have " + FinalTime);
         return FinalTime;
     }
     public static int ConvertHHMMToMinutes(String time)
     {
         String Hr = time.substring(0,2);
         String Min = time.substring(2,4);
-        //System.out.println(Hr + " : " + Min);
         int hour = Integer.parseInt(Hr);
         int minute = Integer.parseInt(Min);
         int FinalTime = hour * 60 + minute;
-        //System.out.println("FinalTime: " + FinalTime);
         return FinalTime;
     }
     public static String GenerateRego(String format, int dayNumber)
@@ -334,7 +343,7 @@ public class Main
                 temp = temp + Character.toString(tempLetter);
             }else if(str.equals("d"))
             {
-                //do something to get a random digit
+                //get a random digit
                 tempDigit = ThreadLocalRandom.current().nextInt(0,9+1);;
                 //concat it to temp and convert digit to string
                 temp = temp + Integer.toString(tempDigit);
@@ -368,6 +377,7 @@ public class Main
 //class for storing generated data
 class VehicleData implements Comparable<VehicleData>
 {
+    //fields
     public String VehicleName;
     public String ArrivalTime;//time is in HHMM
     public boolean EndRoadDeparture;//true if the vehicle departs via end road
@@ -395,6 +405,7 @@ class VehicleData implements Comparable<VehicleData>
         Registration = "";
         FinalSpeed = 0;
     }
+    
     //constructor
     public VehicleData(String VehicleName, String ArrivalTime, 
                        String DepartureTime, boolean EndRoadDeparture, 
@@ -413,6 +424,8 @@ class VehicleData implements Comparable<VehicleData>
         this.Registration = Registration;
         this.FinalSpeed = FinalSpeed;
     }
+    
+    //for sorting
     @Override
     public int compareTo(VehicleData v)
     {
