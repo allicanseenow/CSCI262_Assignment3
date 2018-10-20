@@ -171,7 +171,7 @@ public class Traffic {
             //and then to get the vehicle list and stats list
             Vehicle[] v = a.getVehicleList();
             Stats[] VehicleStats = a.getStatsList();
-            int roadLength = a.getRoadLength();
+            double roadLength = a.getRoadLength();
             
             List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
             // CODE FOR ACTIVITY ENGINE AND LOGS
@@ -184,98 +184,126 @@ public class Traffic {
             }
             //sort generateddatalist
             Collections.sort(GeneratedDataList);
-            //MANAGE PARKING SPACES HERE
+            //MANAGE PARKING SPACES
             int availableParking = a.getParkingSpaceAvailable();
-            //make array of available parking spaces
-            int[] parkingSpaces = new int[availableParking];//parking spaces stores the last time it is occupied
-            //set parking spaces to zero
-            for (int i=0;i<availableParking;i++)
+            ManageParking(availableParking,GeneratedDataList);
+            //WriteToLog is already called from ManageParking
+            
+            //CODE FOR ANALYSIS ENGINE
+        
+        
+        
+        
+        
+        
+        
+            // CODE FOR ALERT ENGINE
+            //List<VehicleData> a = new ArrayList<VehicleData>();
+            for(;;)//infinite loop
             {
-                parkingSpaces[i]=0;
-            }
-            //create temporary variables to hold day numbers
-            int prevDay, currentDay;
-            prevDay=0;
-            //loop through generated data (separated by day)
-            for(VehicleData c: GeneratedDataList)
-            {
-                //set current day number
-                currentDay=c.DayNumber;
-                //first of all check if previous day num==current day num
-                if(currentDay!=prevDay)
-                {//if not, reset parking spaces for a new day
-                    for (int i=0;i<availableParking;i++)
-                    {
-                        parkingSpaces[i]=0;
-                    }
-                }
-                //process parking...
-                int counter=0;
-                //search through array to see if there are available spaces
-                for (int i=0;i<availableParking;i++)
+                System.out.println("Do you wish to continue with Alert Engine?");
+                System.out.println("Press any key to proceed or 'q' to quit");
+                Scanner in = new Scanner(System.in);
+                String choice = in.nextLine();
+                choice = choice.toLowerCase();
+                if(choice.compareTo("q")==0)
                 {
-                    if(c.ParkingStartTime>parkingSpaces[i])
-                    {
-                        parkingSpaces[i]=c.ParkingStopTime;
-                        c.Parking = true;
-                        break;
-                    }else
-                    {
-                        counter++;
-                    }
-                }
-                if(counter>=availableParking)
-                {//if loop has gone through without a parking space
-                    //change values of this vehicle so that it doesn't park
-                    c.Parking = false;
-                    //c.ParkingStartTime=0;
-                    //c.ParkingStopTime=0;
-                }
-                //set prevDay number
-                prevDay=c.DayNumber;
-            }
-            //double check that vehicles with false for parking do not have parking times
-            for(VehicleData d: GeneratedDataList)
-            {
-                if(d.Parking==false)
+                    System.out.println("Quitting Alert Engine");
+                    break;
+                }else
                 {
-                    d.ParkingStartTime = 0;
-                    d.ParkingStopTime = 0;
+                    //prompt user for stats file
+                    System.out.print("Enter File Name for New Statistics: ");
+                    String StatisticsFileN = in.next();
+                    //prompt user for number of days
+                    System.out.print("Enter Number Of Days To Simulate: ");
+                    int requestDays = in.nextInt();
+                    //read stats file - might be able to do this from T's code
+                        //IDEA: create another traffic object
+                    Traffic b = new Traffic(vehicleFileName,StatisticsFileN,requestDays);
+                    Vehicle[] veh = b.getVehicleList();
+                    Stats[] vSt = b.getStatsList();
+                    //initialise a List<VehicleData>
+                    List<VehicleData> List2 = new ArrayList<VehicleData>();
+                    //run activity engine with stats provided
+                    System.out.println("Running Activity Engine...");
+                    int rL = b.getRoadLength();
+                    //call activityengine
+                    for(int j=0;j<requestDays;j++)
+                    {
+                        System.out.println("Starting Simulation for Day "+(j+1));
+                        ActivityEngine(veh,vSt,j+1,rL,List2);
+                    }
+                    //sort list
+                    Collections.sort(List2);
+                    int avaiP = b.parkingSpaceAvailable;
+                    //manage parking...
+                    ManageParking(avaiP,List2);
+                    //written to log in ManageParking
+                    
+                    //run analysis engine
+                    System.out.println("Running Analysis Engine...");
+                    //go through each day
+                        //report on anomaly
+                
+                    //report Alert Engine Complete
+                    System.out.println("Alert Engine Complete");
                 }
+            
             }
-            //call WriteToLog to write in entries
-            WriteToLog(GeneratedDataList);
-            
-            
-            
-            
-            
-            
-            
-            
         }
         catch (Exception ex) {
             System.out.println(ex);
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        //CODE FOR ANALYSIS ENGINE
-        
-        
-        
-        
-        
-        
-        
-        // CODE FOR ALERT ENGINE
+    }
+    public static void ManageParking(int availableParking,List<VehicleData> passedList)
+    {
+        int[] parkingSpaces = new int[availableParking];
+        //set parking spaces to 0
+        for(int i=0;i<availableParking;i++)
+        {
+            parkingSpaces[i]=0;
+        }
+        //create temporary variables to hold day numbers
+        int prevDay, currentDay;
+        prevDay =0;
+        for(VehicleData d: passedList)
+        {
+            currentDay = d.DayNumber;
+            if(currentDay!=prevDay)
+            {
+                for(int i=0;i<availableParking;i++)
+                {
+                    parkingSpaces[i]=0;
+                }
+            }
+            int counter=0;
+            for(int i=0;i<availableParking;i++)
+            {
+                if(d.ParkingStartTime>parkingSpaces[i])
+                {
+                    parkingSpaces[i] = d.ParkingStopTime;
+                    d.Parking = true;
+                    break;
+                }else
+                {
+                    counter++;
+                }
+            }
+            if(counter>=availableParking)
+            {
+                d.Parking = false;
+            }
+        }
+        for(VehicleData e: passedList)
+        {
+            if(e.Parking==false)
+            {
+                e.ParkingStartTime = 0;
+                e.ParkingStopTime = 0;
+            }
+        }
+        WriteToLog(passedList);
     }
     
     //METHOD FOR WRITING TO LOG FILE
@@ -314,9 +342,9 @@ public class Traffic {
         }
     }
     
-    public static void ActivityEngine(Vehicle[] vStats,Stats[] VehicleStats, int dayNumber,int road, List<VehicleData> GeneratedDataList)
+    public static void ActivityEngine(Vehicle[] vStats,Stats[] VehicleStats, int dayNumber,double road, List<VehicleData> GeneratedDataList)
     {//this generates the vehicles for a single day
-        double roadLength = Double.valueOf(road);
+        double roadLength = road;
         for(Stats vehicle : VehicleStats)
         {//for every vehicle in the list of vehicle statistics
             //declare variable for number of vehicles
