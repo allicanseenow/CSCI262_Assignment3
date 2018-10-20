@@ -1,5 +1,3 @@
-
-package traffic;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -308,26 +306,6 @@ public class Traffic {
                 out.write("\n");
                 //log file entries are as below
                 //Day:XX:VType:XX:ArrTime:XX:DepTime:XX:Parking:y/n:ParkStart:XX:ParkEnd:XX:Speed:XX:FinalSpeed:XX
-                
-                System.out.print("Day:"+v.DayNumber);
-                System.out.print(":VType:"+v.VehicleName);
-                System.out.print(":ArrTime:"+v.ArrivalTime);
-                System.out.print(":DepTime:"+v.DepartureTime);
-                if(v.Parking==true)
-                {
-                    System.out.print(":Parking:y");
-                }else
-                {
-                    System.out.print(":Parking:n");
-                }
-                System.out.print(":ParkStart:"+v.ParkingStartTime);
-                System.out.print(":ParkEnd:"+v.ParkingStopTime);
-                System.out.print(":Speed:"+v.Speed);
-                System.out.print(":FinalSpeed:"+v.FinalSpeed);
-                System.out.println();
-                
-                
-                
             }
             out.close();
         }catch(Exception e)//Exception is for general exceptions
@@ -336,7 +314,7 @@ public class Traffic {
         }
     }
     
-    public static void ActivityEngine(Vehicle[] vStats,Stats[] VehicleStats, int dayNumber,int road)//activity engine should take stats list as parameter as well
+    public static void ActivityEngine(Vehicle[] vStats,Stats[] VehicleStats, int dayNumber,int road)
     {//this generates the vehicles for a single day
         double roadLength = Double.valueOf(road);
         for(Stats vehicle : VehicleStats)
@@ -358,7 +336,7 @@ public class Traffic {
             //first check if parking flag from car stats allows for parking
             boolean parkingAllowed = false;//set to false as default
             //determine format of registration
-            String regoFormat = "LLDD";//just an example, set to proper value later
+            String regoFormat = "LLDD";//just an example, set to proper value below:
             //loop through Vehicle[] until name matches each other
             for(Vehicle ve:vStats)
             {
@@ -523,18 +501,17 @@ public class Traffic {
         {
             str = Character.toString(format.charAt(i));
             if(str.equals("l"))
-            {                
-                //do something to get a random letter, preferrably upper case
+            {
                 //get random int within range of alphabet
                 int position = ThreadLocalRandom.current().nextInt(0,25+1);
 
-                //set tempLetter to equal thingy in string
+                //set tempLetter to equal letter in particular position of string
                 tempLetter=letters.charAt(position);
                 //concat it to temp
                 temp = temp + Character.toString(tempLetter);
             }else if(str.equals("d"))
             {
-                //get a random digit
+                //get a random digit, between 0 and 9
                 tempDigit = ThreadLocalRandom.current().nextInt(0,9+1);;
                 //concat it to temp and convert digit to string
                 temp = temp + Integer.toString(tempDigit);
@@ -549,15 +526,12 @@ public class Traffic {
                 alreadyExists = true;
             }
         }
-        //linear search through array list, if day number and rego are the same
-        //call this method again
+        //call this GenerateRego again if registration already exists for a given day
         if(alreadyExists==true)
         {
             System.out.println("Vehicle appears twice - generating new registration plate");
             GenerateRego(format,dayNumber);
         }
-
-        System.out.println(temp);
         return temp;
     }
 }
