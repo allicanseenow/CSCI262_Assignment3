@@ -52,9 +52,11 @@ public class Traffic {
     }
 
     public void readVehicleFile(String fileName) {
-        try (Scanner sc = new Scanner(new File(fileName))) {
+        try {
+            Scanner sc = new Scanner(new File(fileName));
             readFirstVehicleLine(sc);
             readEachNextVehicleLine(sc);
+            sc.close();
         }
         catch (Exception ex) {
             System.err.println("Error while reading file " + fileName);
@@ -92,9 +94,11 @@ public class Traffic {
     }
 
     public void readStatsFile(String fileName) {
-        try (Scanner sc = new Scanner(new File(fileName))) {
+        try {
+            Scanner sc = new Scanner(new File(fileName));
             readFirstStatsLine(sc);
             readEachNextStatsLine(sc);
+            sc.close();
         }
         catch (Exception ex) {
             System.err.println("Error while reading file " + fileName);
