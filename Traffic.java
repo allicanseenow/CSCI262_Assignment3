@@ -243,9 +243,37 @@ public class Traffic {
                     
                     //run analysis engine
                     System.out.println("Running Analysis Engine...");
-                    //go through each day
-                        //report on anomaly
-                
+                    //whatever this involves
+
+
+                    //for each day
+                    for(int k=0;k<requestDays;k++)
+                    {
+                        //double TotalSpeedWeight =0;
+                        //double TotalNumWeight=0;
+                        //double SpeedThreshold = 2*(sum of all weights)
+                        //double NumberThreshold = 2*(sum of all weights)
+                        //for each vehicle type
+                        //{
+                            //CALCULATE SPEED WEIGHT
+                            //double meanDiff = generatedDataMean - mean(from stats)
+                            //double speedWeight = meanDiff/standardDev(from stats) * weight(from stats)
+                            //TotalSpeedWeight += speedWeight;
+                        
+                            //calculate volume (no. of vehicles) weight
+                            //same as the stuff above, except with TotalNumWeight etc.
+                        //}    
+                        //if(TotalSpeedWeight>SpeedThreshold)
+                        //{
+                            //System.out.println("Speed Threshold Breached On Day: " + (k+1));
+                        //}
+                        
+                        //if(TotalNumWeight>NumberThreshold)
+                        //{
+                            //System.out.println("Volume Threshold Breached On Day: " + (k+1));
+                        //}
+                        
+                    }
                     //report Alert Engine Complete
                     System.out.println("Alert Engine Complete");
                 }
@@ -256,6 +284,7 @@ public class Traffic {
             System.out.println(ex);
         }
     }
+    
     public static void ManageParking(int availableParking,List<VehicleData> passedList)
     {
         int[] parkingSpaces = new int[availableParking];
