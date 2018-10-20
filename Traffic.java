@@ -1,3 +1,4 @@
+package traffic;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -8,7 +9,7 @@ import java.io.*;
 
 public class Traffic {
     
-    public static List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
+    //public static List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
     //variable for log file name
     public static String LogFileName = "log.txt";
     
@@ -159,8 +160,7 @@ public class Traffic {
     }
 
     public static void main(String[] args) {
-        /*Traffic a = new Traffic();
-        a.readFile(args);*/
+        
         // CODE FOR INITIAL INPUT
         try {
             String vehicleFileName = args[0];
@@ -173,14 +173,14 @@ public class Traffic {
             Stats[] VehicleStats = a.getStatsList();
             int roadLength = a.getRoadLength();
             
-            
+            List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
             // CODE FOR ACTIVITY ENGINE AND LOGS
             //call ActivityEngine, for each day
             for (int i=0;i<numOfDays;i++)
             {
                 System.out.println("Starting Simulation for Day " + (i+1));
                 //takes parameters vehicle[], stats[], day number, road length
-                ActivityEngine(v,VehicleStats,i+1,roadLength);
+                ActivityEngine(v,VehicleStats,i+1,roadLength,GeneratedDataList);
             }
             //sort generateddatalist
             Collections.sort(GeneratedDataList);
@@ -244,7 +244,7 @@ public class Traffic {
                 }
             }
             //call WriteToLog to write in entries
-            WriteToLog();
+            WriteToLog(GeneratedDataList);
             
             
             
@@ -279,8 +279,8 @@ public class Traffic {
     }
     
     //METHOD FOR WRITING TO LOG FILE
-    public static void WriteToLog()
-    {
+    public static void WriteToLog(List<VehicleData> GeneratedDataList)
+    {//take a variable of List<VehicleData> as parameter
         //try to write stuff to log
         try
         {
@@ -314,7 +314,7 @@ public class Traffic {
         }
     }
     
-    public static void ActivityEngine(Vehicle[] vStats,Stats[] VehicleStats, int dayNumber,int road)
+    public static void ActivityEngine(Vehicle[] vStats,Stats[] VehicleStats, int dayNumber,int road, List<VehicleData> GeneratedDataList)
     {//this generates the vehicles for a single day
         double roadLength = Double.valueOf(road);
         for(Stats vehicle : VehicleStats)
@@ -352,7 +352,7 @@ public class Traffic {
             for(int i=0;i<numberOfVehicles;i++)
             {
                 //generate registration plate
-                String Registration = GenerateRego(regoFormat, dayNumber);
+                String Registration = GenerateRego(regoFormat, dayNumber,GeneratedDataList);
                 //vehicle name
 
                 //get speed of vehicle first (gaussian random speed)
@@ -482,7 +482,7 @@ public class Traffic {
         int FinalTime = hour * 60 + minute;
         return FinalTime;
     }
-    public static String GenerateRego(String format, int dayNumber)
+    public static String GenerateRego(String format, int dayNumber, List<VehicleData> GeneratedDataList)
     {
         int length = format.length();
         String temp = "";
@@ -530,8 +530,10 @@ public class Traffic {
         if(alreadyExists==true)
         {
             System.out.println("Vehicle appears twice - generating new registration plate");
-            GenerateRego(format,dayNumber);
+            GenerateRego(format,dayNumber,GeneratedDataList);
         }
+
+        System.out.println(temp);
         return temp;
     }
 }
