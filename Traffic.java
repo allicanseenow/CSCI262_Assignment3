@@ -2,7 +2,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 import java.io.*;
 
 
@@ -165,25 +165,29 @@ public class Traffic {
     public static void main(String[] args) {
         
         // CODE FOR INITIAL INPUT
+        Traffic a;
         try {
             String vehicleFileName = args[0];
             String statFileName = args[1];
             String days = args[2];
             int numOfDays = Integer.parseInt(days);
-            Traffic a = new Traffic(vehicleFileName,statFileName,numOfDays);
+            a = new Traffic(vehicleFileName,statFileName,numOfDays);
+
             //and then to get the vehicle list and stats list
             Vehicle[] v = a.getVehicleList();
             Stats[] VehicleStats = a.getStatsList();
             double roadLength = a.getRoadLength();
             
             List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
+            System.out.println("\n\n");
             // CODE FOR ACTIVITY ENGINE AND LOGS
             //call ActivityEngine, for each day
             for (int i=0;i<numOfDays;i++)
             {
-                System.out.println("Starting Simulation for Day " + (i+1));
+                System.out.println("--------------------STARTING SIMULATION FOR DAY " + (i+1)+"--------------------");
                 //takes parameters vehicle[], stats[], day number, road length
                 ActivityEngine(v,VehicleStats,i+1,roadLength,GeneratedDataList);
+                System.out.println("\n\n");
             }
             //sort generateddatalist
             Collections.sort(GeneratedDataList);
@@ -370,6 +374,7 @@ public class Traffic {
             out.close();
         }catch(Exception e)//Exception is for general exceptions
         {
+            System.out.println("Error writing to log");
             System.out.println(e);
         }
     }
@@ -377,6 +382,7 @@ public class Traffic {
     public static void ActivityEngine(Vehicle[] vStats,Stats[] VehicleStats, int dayNumber,double road, List<VehicleData> GeneratedDataList)
     {//this generates the vehicles for a single day
         double roadLength = road;
+        Random rand = new Random();
         for(Stats vehicle : VehicleStats)
         {//for every vehicle in the list of vehicle statistics
             //declare variable for number of vehicles
@@ -392,6 +398,7 @@ public class Traffic {
             double speedStandardDev = vehicle.speedStandardDeviation;
             //vehicle name
             String VName = vehicle.name;
+            System.out.println();
             System.out.println("Number of Vehicles of Type '"+VName+"': " + numberOfVehicles);
             //first check if parking flag from car stats allows for parking
             boolean parkingAllowed = false;//set to false as default
@@ -417,21 +424,32 @@ public class Traffic {
 
                 //get speed of vehicle first (gaussian random speed)
                 double speed = r.nextGaussian()*speedStandardDev + speedMean;
+                if(speed<0)
+                {
+                    speed = speed * (-1);
+                }
                 //average length of time spent on the road in minutes:
                 int avTimeOnRoad = (int) Math.round( roadLength/(speed/60) );
                 //get time in minutes (arrival only)
-                int aTimeMin = ThreadLocalRandom.current().nextInt(0,1380+1);//1380 = 23*60
+                int aTimeMin = rand.nextInt((1380-0)+1)+0;//maximum time 1380, min 0
                 
                 
                 //departure time
                 int dTimeMin = (int) Math.round(r.nextGaussian() + (avTimeOnRoad+aTimeMin));
-                
+                while(dTimeMin<=aTimeMin)
+                {
+                    System.out.println("Departure Time Too Small - Generating New Departure Time");
+                    System.out.println("Arrival time: "+aTimeMin);
+                    System.out.println("Departure time: "+dTimeMin);
+                    dTimeMin = rand.nextInt(avTimeOnRoad+15) + aTimeMin;
+                    System.out.println("New Departure Time: "+dTimeMin);
+                }
                 
                 
                 //EndRoadDeparture
                 boolean EndRoadD;
                 //get random number (1 or 0) to decide true or false for EndRoadDeparture
-                int ranNum = ThreadLocalRandom.current().nextInt(0,1+1);
+                int ranNum = rand.nextInt(1+1)+0;
                 if(ranNum==0)
                 {
                     EndRoadD = false;
@@ -446,7 +464,7 @@ public class Traffic {
                 if(parkingAllowed)
                 {//if parking is allowed
                     //set randum number1 to see if this vehicle will park
-                    int ranNum1 = ThreadLocalRandom.current().nextInt(0,1+1);
+                    int ranNum1 = rand.nextInt(1+1)+0;
                     
                     if(ranNum1==0)
                     {
@@ -458,10 +476,11 @@ public class Traffic {
                     
                     if(parking==true)
                     {//set up parking times
-                        parkSTime = ThreadLocalRandom.current().nextInt(aTimeMin,aTimeMin+avTimeOnRoad+1); 
-                        parkEndTime = ThreadLocalRandom.current().nextInt(parkSTime,parkSTime+15);//up to 15 mins parking
+                        //max-min+1 + min
+                        parkSTime = rand.nextInt(avTimeOnRoad+1)+aTimeMin+1;
+                        parkEndTime = rand.nextInt(15+1)+parkSTime;
                         //redo departure time 
-                        dTimeMin = (int) Math.round(r.nextGaussian() + (aTimeMin+parkEndTime));
+                        dTimeMin = rand.nextInt(avTimeOnRoad+aTimeMin+15) + parkEndTime;
                     }else
                     {//set parking times to 0
                         parkSTime = 0;
@@ -544,6 +563,7 @@ public class Traffic {
     }
     public static String GenerateRego(String format, int dayNumber, List<VehicleData> GeneratedDataList)
     {
+        Random ran = new Random();
         int length = format.length();
         String temp = "";
         //convert format to lower case
@@ -563,7 +583,7 @@ public class Traffic {
             if(str.equals("l"))
             {
                 //get random int within range of alphabet
-                int position = ThreadLocalRandom.current().nextInt(0,25+1);
+                int position = ran.nextInt((25-0)+1)+0;
 
                 //set tempLetter to equal letter in particular position of string
                 tempLetter=letters.charAt(position);
@@ -572,7 +592,7 @@ public class Traffic {
             }else if(str.equals("d"))
             {
                 //get a random digit, between 0 and 9
-                tempDigit = ThreadLocalRandom.current().nextInt(0,9+1);;
+                tempDigit = ran.nextInt((9-0)+1)+0;//( (max - min) + 1 ) + min
                 //concat it to temp and convert digit to string
                 temp = temp + Integer.toString(tempDigit);
             }
@@ -592,8 +612,7 @@ public class Traffic {
             System.out.println("Vehicle appears twice - generating new registration plate");
             GenerateRego(format,dayNumber,GeneratedDataList);
         }
-
-        System.out.println(temp);
+        //System.out.println(temp);
         return temp;
     }
 }
