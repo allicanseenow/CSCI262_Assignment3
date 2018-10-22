@@ -1,4 +1,4 @@
-
+package pkg262ass3;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -637,7 +637,7 @@ public class Traffic {
                             if(dTimeMin<aTimeMin)
                             {
                                 int difference = aTimeMin - dTimeMin;
-                                dTimeMin = dTimeMin + difference + 3;
+                                dTimeMin = dTimeMin + difference + 7;
                             }
                         }
                             
