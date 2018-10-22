@@ -25,7 +25,6 @@ public class AnalysisEngine {
             double diffTime = finalDepTime - arrTime;
             // Measure unit: km/hour
             double averageSpeed = roadLength/(diffTime/60);
-            System.out.println(" averageSpeed is " + averageSpeed);
             // If this vehicle breaches the speed limit
             if (averageSpeed > speedLimit) {
                 line.setBreachSpeed(averageSpeed);
