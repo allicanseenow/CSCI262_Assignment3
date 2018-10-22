@@ -279,24 +279,28 @@ public class Traffic {
                     //for each day
                     for(int k=0;k<requestDays;k++)
                     {
-                        /*
-                        for(object b: objectArray)
+                        double speedWeight=0;
+                        double volumeWeight=0;
+                        System.out.println("Checking Anomalies For Day: "+(k+1));
+                        
+                        //for(object b: objectArray)
                         {
                             //MIGHT NEED TO MATCH UP DAYS!!!
+                            //like daynum = k+1;
                         
                             //get name
-                            String VecName =  b.name;
+                            String VecName =  "asdf";//b.name;
                             //set average values of speed and volume
-                            double blSpeed=b.speed;// or whatever it is
-                            double blVolume = b.volume;// or whatever it is  (note bl = BaseLine)
+                            double blSpeed=2;//b.speed;// or whatever it is
+                            double blVolume = 2;//b.volume;// or whatever it is  (note bl = BaseLine)
                             //For searching through vehicle
                             double statsSpeedWeight = 0;
-                            double statsVolWeight = 0;
-                            //for searching through Stats
-                            double statsNumMean;
-                            double statsNumSD;
-                            double statsVolMean;
-                            double statsVolSD;
+                            double statsNumWeight = 0;
+                            //for searching through Stats, initialise first
+                            double statsNumMean=0;
+                            double statsNumSD=0;
+                            double statsSpeedMean=0;
+                            double statsSpeedSD=0;
                         
                             //search through vehicle to get speed and volume
                             for(Vehicle abc :veh)
@@ -305,7 +309,7 @@ public class Traffic {
                                 {
                                     //set values of thresholds here
                                     statsSpeedWeight = abc.speed;
-                                    statsVolumeWeight = abc.volume;
+                                    statsNumWeight = abc.volume;
                                 }
                             }
                             //search through Stats to get speed & vol means and SD
@@ -313,41 +317,46 @@ public class Traffic {
                             {
                                 if(VecName.compareTo(def.name)==0)
                                 {
-                                    statsNumMean
-                                    statsNumSD
-                                    statsVolMean
+                                    statsNumMean = def.numberMean;
+                                    statsNumSD = def.numberStandardDeviation;
+                                    statsSpeedMean = def.speedMean;
+                                    statsSpeedSD = def.speedStandardDeviation;
                                 }
                             }
+                            
+                            //calculate speed weight for this one for this day
+                            double tempSpeed = (blSpeed - statsSpeedMean)/statsSpeedSD;
+                            if(tempSpeed<0)
+                            {
+                                tempSpeed = tempSpeed*(-1);
+                            }
+                            //multiply by weight
+                            tempSpeed = tempSpeed*statsSpeedWeight;
+                            speedWeight = speedWeight + tempSpeed;
+                            
+                            
+                            //calculate volume (number)
+                            double tempVol = (blVolume - statsNumMean)/statsNumSD;
+                            if(tempVol<0)
+                            {
+                                tempVol = tempVol*(-1);
+                            }
+                            //multiply by weight
+                            tempVol = tempVol*statsNumWeight;
+                            volumeWeight = volumeWeight + tempVol;
+                            
                         }
                         
-                        
-                        */
-                        
-                        //double TotalSpeedWeight =0;
-                        //double TotalNumWeight=0;
-                        //double SpeedThreshold = 2*(sum of all weights)
-                        //double NumberThreshold = 2*(sum of all weights)
-                        
-                        
-                        //for each vehicle type
-                        //{
-                            //CALCULATE SPEED WEIGHT
-                            //double meanDiff = generatedDataMean - mean(from stats)
-                            //double speedWeight = meanDiff/standardDev(from stats) * weight(from stats)
-                            //TotalSpeedWeight += speedWeight;
-                        
-                            //calculate volume (no. of vehicles) weight
-                            //same as the stuff above, except with TotalNumWeight etc.
-                        //}    
-                        //if(TotalSpeedWeight>SpeedThreshold)
-                        //{
-                            //System.out.println("Speed Threshold Breached On Day: " + (k+1));
-                        //}
-                        
-                        //if(TotalNumWeight>NumberThreshold)
-                        //{
-                            //System.out.println("Volume Threshold Breached On Day: " + (k+1));
-                        //}
+                        if(speedWeight>speedThresh)
+                        {
+                            System.out.println("Intrusion Detected For Speed");
+                            System.out.println();
+                        }
+                        if(volumeWeight>volumeThresh)
+                        {
+                            System.out.println("Intrusion Detected For Volume");
+                        }
+
                         
                     }
                     //report Alert Engine Complete
@@ -521,11 +530,9 @@ public class Traffic {
                 int dTimeMin = (int) Math.round(r.nextGaussian() + (avTimeOnRoad+aTimeMin));
                 while(dTimeMin<=aTimeMin)
                 {
-                    System.out.println("Departure Time Too Small - Generating New Departure Time");
-                    System.out.println("Arrival time: "+aTimeMin);
-                    System.out.println("Departure time: "+dTimeMin);
+                    System.out.println("Departure Time Too Small - Generating New Departure Time...");
                     dTimeMin = rand.nextInt(avTimeOnRoad+15) + aTimeMin;
-                    System.out.println("New Departure Time: "+dTimeMin);
+                    System.out.println("...New Departure Time Generated\n");
                 }
                 
                 
@@ -582,6 +589,8 @@ public class Traffic {
                 boolean ChangeSpeed = false;
                 double newSpeed = 0;
                 int SpeedChangeTime = 0;
+                int timeElapsed=0;
+                int TimeLeft=0;
                 //if true
                 if(randomNum==1)
                 {
@@ -613,7 +622,7 @@ public class Traffic {
                         
                         
                         //calculate amount of road travelled
-                        int timeElapsed = SpeedChangeTime - aTimeMin;
+                        timeElapsed = SpeedChangeTime - aTimeMin;
                         double roadInDouble = roadLength;
                         double distanceTravelled = speed*timeElapsed;
                         
@@ -622,20 +631,27 @@ public class Traffic {
                         {
                             double distanceToGo = roadLength - distanceTravelled;
                             double timeRemaining =  distanceToGo/newSpeed;
-                            int TimeLeft = (int)Math.round(timeRemaining);
+                            TimeLeft = (int)Math.round(timeRemaining);
                             //update departure time
                             dTimeMin = (int) Math.round(r.nextGaussian() + (TimeLeft+SpeedChangeTime));
+                            if(dTimeMin<aTimeMin)
+                            {
+                                int difference = aTimeMin - dTimeMin;
+                                dTimeMin = dTimeMin + difference + 3;
+                            }
                         }
                             
                     }                       
                 }
                     
-                        
-                    
-                    
-                
-                
-                
+                //make sure that departure time isn't smaller than arrival time
+                while(dTimeMin<=aTimeMin)
+                {
+                    System.out.println("Departure Time Too Small - Generating New Departure Time...");
+                    dTimeMin = rand.nextInt(avTimeOnRoad+SpeedChangeTime+15) + aTimeMin;
+                    System.out.println("...New Departure Time Generated\n");
+                }
+
                 //also check if departure exceeds 1440 (a whole 24 hours)
                 if(dTimeMin>=1440)
                 {
