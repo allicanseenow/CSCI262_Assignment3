@@ -194,7 +194,8 @@ public class Traffic {
             //MANAGE PARKING SPACES
             int availableParking = a.getParkingSpaceAvailable();
             ManageParking(availableParking,GeneratedDataList);
-            //WriteToLog is already called from ManageParking
+            //WriteToLog
+            WriteToLog(GeneratedDataList);
             
             //CODE FOR ANALYSIS ENGINE
         
@@ -292,6 +293,11 @@ public class Traffic {
         }
     }
     
+    public static void AnalysisEngine()
+    {
+        
+    }
+    
     public static void ManageParking(int availableParking,List<VehicleData> passedList)
     {
         int[] parkingSpaces = new int[availableParking];
@@ -339,7 +345,7 @@ public class Traffic {
                 e.ParkingStopTime = 0;
             }
         }
-        WriteToLog(passedList);
+        
     }
     
     //METHOD FOR WRITING TO LOG FILE
@@ -353,24 +359,23 @@ public class Traffic {
             for(VehicleData v : GeneratedDataList)
             {
                 out.write("Day:"+v.DayNumber);
-                out.write(":VType:"+v.VehicleName);
-                out.write(":ArrTime:"+v.ArrivalTime);
-                out.write(":DepTime:"+v.DepartureTime);
+                out.write("-VType:"+v.VehicleName);
+                out.write("-ArrTime:"+v.ArrivalTime);
+                out.write("-DepTime:"+v.DepartureTime);
                 if(v.Parking==true)
                 {
-                    out.write(":Parking:y");
+                    out.write("-Parking:y");
                 }else
                 {
-                    out.write(":Parking:n");
+                    out.write("-Parking:n");
                 }
-                out.write(":ParkStart:"+v.ParkingStartTime);
-                out.write(":ParkEnd:"+v.ParkingStopTime);
-                out.write(":Speed:"+v.Speed);
-                out.write(":EndRoadDep:"+v.EndRoadDeparture);
-                out.write(":FinalSpeed:"+v.FinalSpeed);
+                out.write("-ParkStart:"+v.ParkingStartTime);
+                out.write("-ParkEnd:"+v.ParkingStopTime);
+                out.write("-Speed:"+v.Speed);
+                out.write("-EndRoadDep:"+v.EndRoadDeparture);
                 out.write("\n");
                 //log file entries are as below
-                //Day:XX:VType:XX:ArrTime:XX:DepTime:XX:Parking:y/n:ParkStart:XX:ParkEnd:XX:Speed:XX:EndRoadDep:XX:FinalSpeed:XX
+                //Day:XX-VType:XX-ArrTime:XX-DepTime:XX-Parking:y/n-ParkStart:XX-ParkEnd:XX-Speed:XX-EndRoadDep:XX
             }
             out.close();
         }catch(Exception e)//Exception is for general exceptions
