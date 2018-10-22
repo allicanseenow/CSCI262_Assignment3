@@ -1,4 +1,3 @@
-package traffic;
 
 //class for storing generated data
 class VehicleData implements Comparable<VehicleData>
@@ -14,7 +13,11 @@ class VehicleData implements Comparable<VehicleData>
     public double Speed;//km/hr
     public int DayNumber;//which day it is
     public String Registration;//rego number
-    public double FinalSpeed;//km/hr
+    public boolean ChangeSpeed;
+    public int SpeedChangeTime;
+    public double NewSpeed;
+    public int NumberOfTypePerDay;
+
     
     //default constructor
     public VehicleData()
@@ -29,14 +32,19 @@ class VehicleData implements Comparable<VehicleData>
         Speed = 0;
         DayNumber = 0;
         Registration = "";
-        FinalSpeed = 0;
+        ChangeSpeed = false;
+        SpeedChangeTime=0;
+        NewSpeed=0;
+        NumberOfTypePerDay=0;
     }
     
     //constructor
     public VehicleData(String VehicleName, String ArrivalTime, 
                        String DepartureTime, boolean EndRoadDeparture, 
                        boolean Parking, int ParkingStartTime, 
-                       int ParkingStopTime, double Speed, int DayNumber, String Registration, double FinalSpeed)
+                       int ParkingStopTime, double Speed, int DayNumber, 
+                       String Registration, boolean ChangeSpeed, 
+                       int SpeedChangeTime,double NewSpeed,int NumberOfTypePerDay)
     {
         this.VehicleName = VehicleName;
         this.ArrivalTime = ArrivalTime;
@@ -48,7 +56,10 @@ class VehicleData implements Comparable<VehicleData>
         this.Speed = Speed;
         this.DayNumber = DayNumber;
         this.Registration = Registration;
-        this.FinalSpeed = FinalSpeed;
+        this.ChangeSpeed = ChangeSpeed;
+        this.SpeedChangeTime = SpeedChangeTime;
+        this.NewSpeed = NewSpeed;
+        this.NumberOfTypePerDay = NumberOfTypePerDay;
     }
     
     //for sorting
