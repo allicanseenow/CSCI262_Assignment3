@@ -1,83 +1,72 @@
-Day:1-VType:Red car-ArrTime:0001-DepTime:0006-Parking:n-ParkStart:0-ParkEnd:0-Speed:49.482226378347264-EndRoadDep:false
-Day:1-VType:Elephant-ArrTime:0015-DepTime:0036-Parking:n-ParkStart:0-ParkEnd:0-Speed:15.96603223421889-EndRoadDep:false
-Day:1-VType:Bus-ArrTime:0016-DepTime:0025-Parking:n-ParkStart:0-ParkEnd:0-Speed:34.979620480309464-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:0054-DepTime:0107-Parking:y-ParkStart:56-ParkEnd:66-Speed:49.735809629781194-EndRoadDep:false
-Day:1-VType:Motorbike-ArrTime:0132-DepTime:0138-Parking:n-ParkStart:0-ParkEnd:0-Speed:56.05513412271625-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:0142-DepTime:0219-Parking:y-ParkStart:108-ParkEnd:122-Speed:61.29490181619134-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:0201-DepTime:0208-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.716638951086075-EndRoadDep:true
-Day:1-VType:Bus-ArrTime:0257-DepTime:0306-Parking:n-ParkStart:0-ParkEnd:0-Speed:30.265814717467073-EndRoadDep:false
-Day:1-VType:Red car-ArrTime:0306-DepTime:0311-Parking:n-ParkStart:0-ParkEnd:0-Speed:54.49660330312251-EndRoadDep:true
-Day:1-VType:Elephant-ArrTime:0313-DepTime:0325-Parking:n-ParkStart:0-ParkEnd:0-Speed:28.635012973687097-EndRoadDep:true
-Day:1-VType:Motorbike-ArrTime:0403-DepTime:0409-Parking:n-ParkStart:0-ParkEnd:0-Speed:42.4351353315982-EndRoadDep:false
-Day:1-VType:Emergency-ArrTime:0506-DepTime:0509-Parking:n-ParkStart:0-ParkEnd:0-Speed:67.0412406479077-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:0734-DepTime:1140-Parking:y-ParkStart:455-ParkEnd:465-Speed:44.96682095799554-EndRoadDep:false
-Day:1-VType:Taxi-ArrTime:0759-DepTime:0803-Parking:n-ParkStart:0-ParkEnd:0-Speed:60.61780677071761-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:0830-DepTime:0836-Parking:n-ParkStart:0-ParkEnd:0-Speed:46.33306094805519-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:0920-DepTime:0925-Parking:n-ParkStart:0-ParkEnd:0-Speed:47.28032604399591-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:1035-DepTime:1041-Parking:n-ParkStart:0-ParkEnd:0-Speed:49.452890588767936-EndRoadDep:true
-Day:1-VType:Motorbike-ArrTime:1104-DepTime:1110-Parking:n-ParkStart:0-ParkEnd:0-Speed:55.08973142963591-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:1121-DepTime:1914-Parking:y-ParkStart:684-ParkEnd:691-Speed:48.66064696676156-EndRoadDep:false
-Day:1-VType:Red car-ArrTime:1128-DepTime:2115-Parking:y-ParkStart:691-ParkEnd:700-Speed:53.7084108933297-EndRoadDep:false
-Day:1-VType:Motorbike-ArrTime:1202-DepTime:1208-Parking:n-ParkStart:0-ParkEnd:0-Speed:55.60936727950368-EndRoadDep:true
-Day:1-VType:Motorbike-ArrTime:1258-DepTime:1305-Parking:n-ParkStart:0-ParkEnd:0-Speed:48.02502717023313-EndRoadDep:false
-Day:1-VType:Red car-ArrTime:1311-DepTime:1318-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.9889671848571-EndRoadDep:true
-Day:1-VType:Bus-ArrTime:1358-DepTime:1409-Parking:n-ParkStart:0-ParkEnd:0-Speed:29.86375730431572-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:1427-DepTime:1823-Parking:y-ParkStart:870-ParkEnd:883-Speed:43.453165386349674-EndRoadDep:false
-Day:1-VType:Red car-ArrTime:1435-DepTime:2340-Parking:y-ParkStart:876-ParkEnd:889-Speed:53.31398000772354-EndRoadDep:false
-Day:1-VType:Taxi-ArrTime:1550-DepTime:1556-Parking:n-ParkStart:0-ParkEnd:0-Speed:54.626920406137266-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:1554-DepTime:1709-Parking:y-ParkStart:958-ParkEnd:960-Speed:51.9107498378545-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:1554-DepTime:1600-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.859384020090125-EndRoadDep:false
-Day:1-VType:Red car-ArrTime:1607-DepTime:1613-Parking:n-ParkStart:0-ParkEnd:0-Speed:55.25405322687814-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:1626-DepTime:1633-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.25741586294246-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:1627-DepTime:1824-Parking:y-ParkStart:989-ParkEnd:990-Speed:51.00144286294982-EndRoadDep:true
-Day:1-VType:Taxi-ArrTime:1637-DepTime:1643-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.482018888714514-EndRoadDep:true
-Day:1-VType:Elephant-ArrTime:1654-DepTime:1715-Parking:y-ParkStart:1020-ParkEnd:1027-Speed:17.94032153415078-EndRoadDep:false
-Day:1-VType:Red car-ArrTime:1711-DepTime:1716-Parking:n-ParkStart:0-ParkEnd:0-Speed:44.77978276123913-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:1715-DepTime:2400-Parking:y-ParkStart:1038-ParkEnd:1040-Speed:53.48187666202416-EndRoadDep:false
-Day:1-VType:Motorbike-ArrTime:1718-DepTime:1722-Parking:n-ParkStart:0-ParkEnd:0-Speed:56.144122973606564-EndRoadDep:false
-Day:1-VType:Motorbike-ArrTime:1718-DepTime:1723-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.03611298419622-EndRoadDep:true
-Day:1-VType:Motorbike-ArrTime:1741-DepTime:1747-Parking:n-ParkStart:0-ParkEnd:0-Speed:46.4206483560657-EndRoadDep:false
-Day:1-VType:Motorbike-ArrTime:1813-DepTime:1818-Parking:n-ParkStart:0-ParkEnd:0-Speed:62.58129253459863-EndRoadDep:true
-Day:1-VType:Motorbike-ArrTime:1836-DepTime:1842-Parking:n-ParkStart:0-ParkEnd:0-Speed:49.64244369753209-EndRoadDep:false
-Day:1-VType:Taxi-ArrTime:2019-DepTime:2025-Parking:n-ParkStart:0-ParkEnd:0-Speed:46.3401024360354-EndRoadDep:true
-Day:1-VType:Motorbike-ArrTime:2039-DepTime:2042-Parking:n-ParkStart:0-ParkEnd:0-Speed:61.498806142346865-EndRoadDep:true
-Day:1-VType:Bus-ArrTime:2210-DepTime:2219-Parking:n-ParkStart:0-ParkEnd:0-Speed:32.574260037468875-EndRoadDep:true
-Day:1-VType:Taxi-ArrTime:2213-DepTime:2219-Parking:n-ParkStart:0-ParkEnd:0-Speed:48.439869016668425-EndRoadDep:true
-Day:1-VType:Red car-ArrTime:2249-DepTime:2400-Parking:y-ParkStart:1370-ParkEnd:1379-Speed:47.94409702245372-EndRoadDep:false
-Day:2-VType:Red car-ArrTime:0159-DepTime:0343-Parking:y-ParkStart:121-ParkEnd:122-Speed:46.609077342531165-EndRoadDep:false
-Day:2-VType:Bus-ArrTime:0238-DepTime:0243-Parking:n-ParkStart:0-ParkEnd:0-Speed:48.748071640002905-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:0426-DepTime:0733-Parking:y-ParkStart:270-ParkEnd:284-Speed:47.75194744328274-EndRoadDep:false
-Day:2-VType:Bus-ArrTime:0523-DepTime:0529-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.51084027170007-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:0628-DepTime:0944-Parking:y-ParkStart:394-ParkEnd:407-Speed:52.54990190258426-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:0725-DepTime:1140-Parking:y-ParkStart:450-ParkEnd:463-Speed:52.523392226090344-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:0741-DepTime:0747-Parking:n-ParkStart:0-ParkEnd:0-Speed:48.416920699280595-EndRoadDep:false
-Day:2-VType:Motorbike-ArrTime:0802-DepTime:0808-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.77496679197426-EndRoadDep:false
-Day:2-VType:Red car-ArrTime:0818-DepTime:1656-Parking:y-ParkStart:503-ParkEnd:506-Speed:53.05955315586139-EndRoadDep:true
-Day:2-VType:Motorbike-ArrTime:0909-DepTime:0915-Parking:n-ParkStart:0-ParkEnd:0-Speed:56.577941365113006-EndRoadDep:true
-Day:2-VType:Taxi-ArrTime:0935-DepTime:0942-Parking:n-ParkStart:0-ParkEnd:0-Speed:46.16677242118159-EndRoadDep:true
-Day:2-VType:Motorbike-ArrTime:1041-DepTime:1047-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.29118924464833-EndRoadDep:true
-Day:2-VType:Taxi-ArrTime:1047-DepTime:1053-Parking:n-ParkStart:0-ParkEnd:0-Speed:57.02733228547928-EndRoadDep:false
-Day:2-VType:Red car-ArrTime:1115-DepTime:1323-Parking:y-ParkStart:677-ParkEnd:692-Speed:57.24813658767725-EndRoadDep:false
-Day:2-VType:Taxi-ArrTime:1144-DepTime:1149-Parking:n-ParkStart:0-ParkEnd:0-Speed:58.52739583584101-EndRoadDep:true
-Day:2-VType:Motorbike-ArrTime:1200-DepTime:1204-Parking:n-ParkStart:0-ParkEnd:0-Speed:58.49550833757802-EndRoadDep:true
-Day:2-VType:Motorbike-ArrTime:1203-DepTime:1208-Parking:n-ParkStart:0-ParkEnd:0-Speed:55.512397644149495-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:1247-DepTime:1252-Parking:n-ParkStart:0-ParkEnd:0-Speed:49.3618546333135-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:1256-DepTime:1302-Parking:n-ParkStart:0-ParkEnd:0-Speed:42.27159138679398-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:1258-DepTime:1417-Parking:y-ParkStart:782-ParkEnd:782-Speed:46.928516424305585-EndRoadDep:true
-Day:2-VType:Taxi-ArrTime:1314-DepTime:1320-Parking:n-ParkStart:0-ParkEnd:0-Speed:47.00065422279249-EndRoadDep:false
-Day:2-VType:Red car-ArrTime:1426-DepTime:1433-Parking:n-ParkStart:0-ParkEnd:0-Speed:43.44779657729144-EndRoadDep:false
-Day:2-VType:Motorbike-ArrTime:1534-DepTime:1542-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.836328753078746-EndRoadDep:false
-Day:2-VType:Taxi-ArrTime:1541-DepTime:1547-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.62585383650302-EndRoadDep:true
-Day:2-VType:Bus-ArrTime:1542-DepTime:1555-Parking:n-ParkStart:0-ParkEnd:0-Speed:24.52805345589922-EndRoadDep:true
-Day:2-VType:Motorbike-ArrTime:1546-DepTime:1551-Parking:n-ParkStart:0-ParkEnd:0-Speed:55.92367304375139-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:1558-DepTime:1629-Parking:y-ParkStart:963-ParkEnd:977-Speed:47.956100215565776-EndRoadDep:false
-Day:2-VType:Bus-ArrTime:1602-DepTime:1614-Parking:n-ParkStart:0-ParkEnd:0-Speed:25.17572969474463-EndRoadDep:true
-Day:2-VType:Motorbike-ArrTime:1656-DepTime:1701-Parking:n-ParkStart:0-ParkEnd:0-Speed:58.608566026740064-EndRoadDep:true
-Day:2-VType:Red car-ArrTime:1741-DepTime:2400-Parking:y-ParkStart:1062-ParkEnd:1065-Speed:46.671097176405596-EndRoadDep:false
-Day:2-VType:Motorbike-ArrTime:1849-DepTime:1854-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.766750127023755-EndRoadDep:false
-Day:2-VType:Elephant-ArrTime:1852-DepTime:1926-Parking:n-ParkStart:0-ParkEnd:0-Speed:8.258807591451564-EndRoadDep:false
-Day:2-VType:Taxi-ArrTime:1916-DepTime:1921-Parking:n-ParkStart:0-ParkEnd:0-Speed:56.99789277963141-EndRoadDep:false
-Day:2-VType:Motorbike-ArrTime:2018-DepTime:2024-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.954417188058784-EndRoadDep:true
-Day:2-VType:Motorbike-ArrTime:2038-DepTime:2041-Parking:n-ParkStart:0-ParkEnd:0-Speed:60.67995650026782-EndRoadDep:true
-Day:2-VType:Motorbike-ArrTime:2050-DepTime:2056-Parking:n-ParkStart:0-ParkEnd:0-Speed:52.381005708942574-EndRoadDep:true
-Day:2-VType:Emergency-ArrTime:2113-DepTime:2118-Parking:n-ParkStart:0-ParkEnd:0-Speed:56.96707474925425-EndRoadDep:false
+6
+Day:1-VType:Motorbike-ArrTime:0203-DepTime:0208-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.63715497724485-EndRoadDep:false
+Day:1-VType:Red car-ArrTime:0312-DepTime:0318-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.498022534288886-EndRoadDep:true
+Day:1-VType:Taxi-ArrTime:0319-DepTime:0326-Parking:n-ParkStart:0-ParkEnd:0-Speed:46.10411316168245-EndRoadDep:false
+Day:1-VType:Bus-ArrTime:0350-DepTime:0358-Parking:n-ParkStart:0-ParkEnd:0-Speed:33.6029952127556-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:0350-DepTime:0356-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.41746396214457-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:0403-DepTime:0409-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.16475253727062-EndRoadDep:false
+Day:1-VType:Red car-ArrTime:0421-DepTime:0426-Parking:n-ParkStart:0-ParkEnd:0-Speed:49.725284531127656-EndRoadDep:true
+Day:1-VType:Taxi-ArrTime:0435-DepTime:0440-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.50020807906245-EndRoadDep:false
+Day:1-VType:Motorbike-ArrTime:0447-DepTime:0453-Parking:n-ParkStart:0-ParkEnd:0-Speed:59.45441083095032-EndRoadDep:true
+Day:1-VType:Taxi-ArrTime:0521-DepTime:0527-Parking:n-ParkStart:0-ParkEnd:0-Speed:57.08620661401105-EndRoadDep:false
+Day:1-VType:Elephant-ArrTime:0523-DepTime:0615-Parking:n-ParkStart:0-ParkEnd:0-Speed:5.756631633734903-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:0532-DepTime:0538-Parking:n-ParkStart:0-ParkEnd:0-Speed:45.671013663497604-EndRoadDep:false
+Day:1-VType:Red car-ArrTime:0643-DepTime:0651-Parking:n-ParkStart:0-ParkEnd:0-Speed:41.34118688980597-EndRoadDep:true
+Day:1-VType:Motorbike-ArrTime:0714-DepTime:0722-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.771940147857975-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:0718-DepTime:0726-Parking:n-ParkStart:0-ParkEnd:0-Speed:47.245008189339174-EndRoadDep:true
+Day:1-VType:Emergency-ArrTime:0733-DepTime:0741-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.222261229625246-EndRoadDep:true
+Day:1-VType:Motorbike-ArrTime:0849-DepTime:0853-Parking:n-ParkStart:0-ParkEnd:0-Speed:58.61708790751048-EndRoadDep:false
+Day:1-VType:Bus-ArrTime:0901-DepTime:0911-Parking:n-ParkStart:0-ParkEnd:0-Speed:31.38516522154739-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:0919-DepTime:0927-Parking:n-ParkStart:0-ParkEnd:0-Speed:44.011039651660894-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:0923-DepTime:0928-Parking:n-ParkStart:0-ParkEnd:0-Speed:52.03766384686984-EndRoadDep:false
+Day:1-VType:Bus-ArrTime:0957-DepTime:1006-Parking:n-ParkStart:0-ParkEnd:0-Speed:39.442780685744346-EndRoadDep:true
+Day:1-VType:Motorbike-ArrTime:1000-DepTime:1005-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.71993951786022-EndRoadDep:false
+Day:1-VType:Red car-ArrTime:1017-DepTime:1024-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.962700672211085-EndRoadDep:false
+Day:1-VType:Red car-ArrTime:1111-DepTime:1117-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.60608981697349-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:1111-DepTime:1115-Parking:n-ParkStart:0-ParkEnd:0-Speed:47.342050724415586-EndRoadDep:false
+Day:1-VType:Taxi-ArrTime:1133-DepTime:1137-Parking:n-ParkStart:0-ParkEnd:0-Speed:54.81271266138127-EndRoadDep:false
+Day:1-VType:Red car-ArrTime:1141-DepTime:1148-Parking:n-ParkStart:0-ParkEnd:0-Speed:43.11023524063185-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:1258-DepTime:1758-Parking:y-ParkStart:782-ParkEnd:791-Speed:48.99779612570096-EndRoadDep:true
+Day:1-VType:Motorbike-ArrTime:1314-DepTime:1318-Parking:n-ParkStart:0-ParkEnd:0-Speed:55.304800134701274-EndRoadDep:false
+Day:1-VType:Motorbike-ArrTime:1324-DepTime:1329-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.541077292115176-EndRoadDep:false
+Day:1-VType:Red car-ArrTime:1439-DepTime:2344-Parking:y-ParkStart:881-ParkEnd:885-Speed:54.57035620287949-EndRoadDep:false
+Day:1-VType:Motorbike-ArrTime:1533-DepTime:1538-Parking:n-ParkStart:0-ParkEnd:0-Speed:54.54716207476885-EndRoadDep:false
+Day:1-VType:Red car-ArrTime:1640-DepTime:1646-Parking:n-ParkStart:0-ParkEnd:0-Speed:52.69311729089643-EndRoadDep:true
+Day:1-VType:Motorbike-ArrTime:1803-DepTime:1806-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.80766140992228-EndRoadDep:true
+Day:1-VType:Red car-ArrTime:2033-DepTime:2400-Parking:y-ParkStart:1238-ParkEnd:1253-Speed:46.95185355096888-EndRoadDep:false
+Day:1-VType:Motorbike-ArrTime:2119-DepTime:2124-Parking:n-ParkStart:0-ParkEnd:0-Speed:63.03810468133452-EndRoadDep:false
+Day:1-VType:Motorbike-ArrTime:2137-DepTime:2141-Parking:n-ParkStart:0-ParkEnd:0-Speed:56.60016690314523-EndRoadDep:true
+Day:1-VType:Motorbike-ArrTime:2203-DepTime:2208-Parking:n-ParkStart:0-ParkEnd:0-Speed:68.46136317322268-EndRoadDep:true
+Day:1-VType:Motorbike-ArrTime:2207-DepTime:2212-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.01299865418116-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:0003-DepTime:0008-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.30860969154498-EndRoadDep:false
+Day:2-VType:Red car-ArrTime:0037-DepTime:0044-Parking:n-ParkStart:0-ParkEnd:0-Speed:52.381670078091325-EndRoadDep:false
+Day:2-VType:Red car-ArrTime:0042-DepTime:0128-Parking:y-ParkStart:45-ParkEnd:60-Speed:52.61239572509814-EndRoadDep:false
+Day:2-VType:Taxi-ArrTime:0156-DepTime:0203-Parking:n-ParkStart:0-ParkEnd:0-Speed:44.18628552239848-EndRoadDep:true
+Day:2-VType:Elephant-ArrTime:0326-DepTime:0338-Parking:n-ParkStart:0-ParkEnd:0-Speed:22.880170033282774-EndRoadDep:false
+Day:2-VType:Red car-ArrTime:0333-DepTime:0506-Parking:y-ParkStart:215-ParkEnd:219-Speed:46.51652668625614-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:0337-DepTime:0342-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.4598758006259-EndRoadDep:false
+Day:2-VType:Red car-ArrTime:0358-DepTime:0652-Parking:y-ParkStart:242-ParkEnd:256-Speed:49.870851810925615-EndRoadDep:true
+Day:2-VType:Taxi-ArrTime:0445-DepTime:0451-Parking:n-ParkStart:0-ParkEnd:0-Speed:45.81937413482151-EndRoadDep:true
+Day:2-VType:Motorbike-ArrTime:0447-DepTime:0452-Parking:n-ParkStart:0-ParkEnd:0-Speed:52.59564603953298-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:0451-DepTime:0548-Parking:y-ParkStart:296-ParkEnd:306-Speed:56.3101936824017-EndRoadDep:true
+Day:2-VType:Taxi-ArrTime:0521-DepTime:0526-Parking:n-ParkStart:0-ParkEnd:0-Speed:55.191250837884475-EndRoadDep:false
+Day:2-VType:Motorbike-ArrTime:0535-DepTime:0539-Parking:n-ParkStart:0-ParkEnd:0-Speed:54.67907687509149-EndRoadDep:false
+Day:2-VType:Red car-ArrTime:0535-DepTime:0950-Parking:y-ParkStart:338-ParkEnd:347-Speed:58.506002342944875-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:0553-DepTime:1126-Parking:y-ParkStart:354-ParkEnd:358-Speed:50.58977326460895-EndRoadDep:true
+Day:2-VType:Motorbike-ArrTime:0626-DepTime:0631-Parking:n-ParkStart:0-ParkEnd:0-Speed:47.380595940801264-EndRoadDep:true
+Day:2-VType:Taxi-ArrTime:0831-DepTime:0836-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.725668434493784-EndRoadDep:false
+Day:2-VType:Motorbike-ArrTime:0919-DepTime:0923-Parking:n-ParkStart:0-ParkEnd:0-Speed:60.23602939850412-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:1030-DepTime:1036-Parking:n-ParkStart:0-ParkEnd:0-Speed:59.47284526076138-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:1053-DepTime:2054-Parking:y-ParkStart:657-ParkEnd:670-Speed:41.073070968393594-EndRoadDep:false
+Day:2-VType:Taxi-ArrTime:1100-DepTime:1105-Parking:n-ParkStart:0-ParkEnd:0-Speed:53.211949819593194-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:1139-DepTime:1144-Parking:n-ParkStart:0-ParkEnd:0-Speed:50.95736176930749-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:1252-DepTime:1424-Parking:y-ParkStart:777-ParkEnd:785-Speed:52.355286509344445-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:1351-DepTime:2400-Parking:y-ParkStart:838-ParkEnd:849-Speed:48.84962769531399-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:1357-DepTime:2021-Parking:y-ParkStart:843-ParkEnd:844-Speed:56.029376209325946-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:1709-DepTime:1715-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.44936580173443-EndRoadDep:false
+Day:2-VType:Bus-ArrTime:1913-DepTime:1921-Parking:n-ParkStart:0-ParkEnd:0-Speed:43.33549424054534-EndRoadDep:true
+Day:2-VType:Red car-ArrTime:1949-DepTime:1953-Parking:n-ParkStart:0-ParkEnd:0-Speed:51.46493405039869-EndRoadDep:false
+Day:2-VType:Motorbike-ArrTime:2111-DepTime:2116-Parking:n-ParkStart:0-ParkEnd:0-Speed:65.32545824437675-EndRoadDep:false
+Day:2-VType:Emergency-ArrTime:2214-DepTime:2219-Parking:n-ParkStart:0-ParkEnd:0-Speed:63.75466412090249-EndRoadDep:true
+Day:2-VType:Taxi-ArrTime:2241-DepTime:2245-Parking:n-ParkStart:0-ParkEnd:0-Speed:59.31880158919283-EndRoadDep:false
+Day:2-VType:Red car-ArrTime:2251-DepTime:2400-Parking:y-ParkStart:1373-ParkEnd:1384-Speed:47.98694506641477-EndRoadDep:true
