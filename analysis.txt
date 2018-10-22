@@ -1,0 +1,78 @@
+----------------------------------------------------
+----------------------------------------------------
+Day 1
+Vehicle type: Bus
+	Speed mean: 38.84179723159471
+	Speed SD: 21.598897096310235
+	Volume mean: 2.0
+	Volume SD: 0.0
+
+Vehicle type: Elephant
+	Speed mean: 9.686643993827566
+	Speed SD: 5.579823233918193
+	Volume mean: 3.0
+	Volume SD: 0.0
+
+Vehicle type: Taxi
+	Speed mean: 53.16013551684815
+	Speed SD: 6.43196471589722
+	Volume mean: 5.0
+	Volume SD: 0.0
+
+Vehicle type: Emergency
+	Speed mean: 48.03845328580581
+	Speed SD: 0.0
+	Volume mean: 1.0
+	Volume SD: 0.0
+
+Vehicle type: Red car
+	Speed mean: 49.14632362863131
+	Speed SD: 4.011822001803695
+	Volume mean: 27.0
+	Volume SD: 0.0
+
+Vehicle type: Motorbike
+	Speed mean: 54.68238442485079
+	Speed SD: 2.801019912144744
+	Volume mean: 7.0
+	Volume SD: 0.0
+
+----------------------------------------------------
+----------------------------------------------------
+Day 2
+Vehicle type: Bus
+	Speed mean: 34.32163659691657
+	Speed SD: 4.369324984659804
+	Volume mean: 3.0
+	Volume SD: 0.0
+
+Vehicle type: Elephant
+	Speed mean: 2.075421561120694
+	Speed SD: 0.24772273657747457
+	Volume mean: 2.0
+	Volume SD: 0.0
+
+Vehicle type: Taxi
+	Speed mean: 57.06197857471178
+	Speed SD: 7.9750829843275195
+	Volume mean: 8.0
+	Volume SD: 0.0
+
+Vehicle type: Emergency
+	Speed mean: 51.713977854739504
+	Speed SD: 0.0
+	Volume mean: 1.0
+	Volume SD: 0.0
+
+Vehicle type: Red car
+	Speed mean: 49.52408563991016
+	Speed SD: 3.5012356445468593
+	Volume mean: 22.0
+	Volume SD: 0.0
+
+Vehicle type: Motorbike
+	Speed mean: 55.994312062319615
+	Speed SD: 5.084741780128435
+	Volume mean: 10.0
+	Volume SD: 0.0
+

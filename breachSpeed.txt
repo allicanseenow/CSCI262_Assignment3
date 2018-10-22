@@ -1,0 +1,10 @@
+----------------------------------------------------
+----------------------------------------------------
+Day 1
+Vehicle type: Taxi; Registration Number: U10I; Breaching speed: 75.000000 
+Vehicle type: Emergency; Registration Number: OO89; Breaching speed: 150.000000 
+Vehicle type: Red car; Registration Number: X6WB9K; Breaching speed: 75.000000 
+Day 2
+Vehicle type: Motorbike; Registration Number: LX61VH; Breaching speed: Infinity 
+Vehicle type: Red car; Registration Number: E0IG7M; Breaching speed: 300.000000 
+Vehicle type: Red car; Registration Number: Q4JS7P; Breaching speed: Infinity 
