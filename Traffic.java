@@ -551,17 +551,22 @@ public class Traffic {
                         //generate speed change time to anytime between arrival and departure
                         SpeedChangeTime = rand.nextInt((dTimeMin - aTimeMin)+1)+aTimeMin;
                         
+                        
                         //calculate amount of road travelled
                         int timeElapsed = SpeedChangeTime - aTimeMin;
                         double roadInDouble = roadLength;
                         double distanceTravelled = speed*timeElapsed;
-                        double distanceToGo = roadLength - distanceTravelled;
-                        //nt TimeLeft = (int)Math.round();
                         
-                        //roadlength - travelled
-                        //if endroadd==true
-                            //use this to calculate how much time it'll take to get off the road
-                            //update departure time as necessary
+
+                        if(EndRoadD==true)
+                        {
+                            double distanceToGo = roadLength - distanceTravelled;
+                            double timeRemaining =  distanceToGo/newSpeed;
+                            int TimeLeft = (int)Math.round(timeRemaining);
+                            //update departure time
+                            dTimeMin = (int) Math.round(r.nextGaussian() + (TimeLeft+SpeedChangeTime));
+                        }
+                            
                     }                       
                 }
                     
