@@ -208,7 +208,7 @@ class AnalysisDay {
                 out.write("\tSpeed SD: " + speedSDList.get(vehicleType) + "\n");
                 out.write("\tVolume mean: " + volumeMeanList.get(vehicleType) + "\n");
                 out.write("\tVolume SD: " + volumeSDList.get(vehicleType) + "\n");
-                out.write(System.lineSeparator());
+                out.write("\n");
             }
             out.close();
         }
