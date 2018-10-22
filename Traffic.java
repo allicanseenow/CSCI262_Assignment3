@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -202,8 +203,9 @@ public class Traffic {
             int availableParking = a.getParkingSpaceAvailable();
             ManageParking(availableParking,GeneratedDataList);
             int rl = (int)roadLength;
+            int speedLim = a.getSpeedLimit();
             //WriteToLog
-            WriteToLog(GeneratedDataList,noOfVehicleTypes,rl);
+            WriteToLog(GeneratedDataList,noOfVehicleTypes,rl,speedLim);
             
             //CODE FOR ANALYSIS ENGINE
         
@@ -215,7 +217,7 @@ public class Traffic {
         
             // CODE FOR ALERT ENGINE
             //List<VehicleData> a = new ArrayList<VehicleData>();
-            for(;;)//infinite loop
+            for(;;)//infinite loop, quits with a given clause (enter 'q')
             {
                 System.out.println("Do you wish to continue with Alert Engine?");
                 System.out.println("Press any key to proceed or 'q' to quit");
@@ -224,7 +226,7 @@ public class Traffic {
                 choice = choice.toLowerCase();
                 if(choice.compareTo("q")==0)
                 {
-                    System.out.println("Quitting Alert Engine");
+                    System.out.println("\nQuitting Alert Engine...");
                     break;
                 }else
                 {
@@ -234,8 +236,7 @@ public class Traffic {
                     //prompt user for number of days
                     System.out.print("Enter Number Of Days To Simulate: ");
                     int requestDays = in.nextInt();
-                    //read stats file - might be able to do this from T's code
-                        //IDEA: create another traffic object
+                    //read stats file (keep the same Vehicles.txt)
                     Traffic b = new Traffic(vehicleFileName,StatisticsFileN,requestDays);
                     Vehicle[] veh = b.getVehicleList();
                     Stats[] vSt = b.getStatsList();
@@ -258,17 +259,76 @@ public class Traffic {
                     //written to log in ManageParking
                     
                     //run analysis engine
-                    System.out.println("Running Analysis Engine...");
+                    System.out.println("\nRunning Analysis Engine...");
                     //whatever this involves
 
-
+                    System.out.println("Printing Thresholds:\n");
+                    double volumeThresh=0;
+                    double speedThresh=0;
+                    //print out thresholds across vehicle types
+                    for(Vehicle st:veh)
+                    {
+                        volumeThresh = volumeThresh + (st.volume);
+                        speedThresh = speedThresh + (st.speed);
+                    }
+                    volumeThresh = volumeThresh*2;
+                    speedThresh = speedThresh*2;
+                    System.out.println("Volume Threshold: "+volumeThresh);
+                    System.out.println("Speed Threshold: "+speedThresh);
+                    System.out.println();
                     //for each day
                     for(int k=0;k<requestDays;k++)
                     {
+                        /*
+                        for(object b: objectArray)
+                        {
+                            //MIGHT NEED TO MATCH UP DAYS!!!
+                        
+                            //get name
+                            String VecName =  b.name;
+                            //set average values of speed and volume
+                            double blSpeed=b.speed;// or whatever it is
+                            double blVolume = b.volume;// or whatever it is  (note bl = BaseLine)
+                            //For searching through vehicle
+                            double statsSpeedWeight = 0;
+                            double statsVolWeight = 0;
+                            //for searching through Stats
+                            double statsNumMean;
+                            double statsNumSD;
+                            double statsVolMean;
+                            double statsVolSD;
+                        
+                            //search through vehicle to get speed and volume
+                            for(Vehicle abc :veh)
+                            {
+                                if(VecName.compareTo(abc.name)==0)
+                                {
+                                    //set values of thresholds here
+                                    statsSpeedWeight = abc.speed;
+                                    statsVolumeWeight = abc.volume;
+                                }
+                            }
+                            //search through Stats to get speed & vol means and SD
+                            for(Stats def: vSt)
+                            {
+                                if(VecName.compareTo(def.name)==0)
+                                {
+                                    statsNumMean
+                                    statsNumSD
+                                    statsVolMean
+                                }
+                            }
+                        }
+                        
+                        
+                        */
+                        
                         //double TotalSpeedWeight =0;
                         //double TotalNumWeight=0;
                         //double SpeedThreshold = 2*(sum of all weights)
                         //double NumberThreshold = 2*(sum of all weights)
+                        
+                        
                         //for each vehicle type
                         //{
                             //CALCULATE SPEED WEIGHT
@@ -357,14 +417,15 @@ public class Traffic {
     }
     
     //METHOD FOR WRITING TO LOG FILE
-    public static void WriteToLog(List<VehicleData> GeneratedDataList,int numOfV,int roadLength)
+    public static void WriteToLog(List<VehicleData> GeneratedDataList,int numOfV,int roadLength,int speedLimit)
     {//take a variable of List<VehicleData> as parameter
         //try to write stuff to log
         try
         {
             BufferedWriter out = new BufferedWriter(new FileWriter(LogFileName,false));
             out.write(numOfV+" ");
-            out.write(roadLength+"\n");
+            out.write(roadLength+" ");
+            out.write(speedLimit+"\n");
             //NOTE: true for append, false for overwrite
             for(VehicleData v : GeneratedDataList)
             {
@@ -529,7 +590,6 @@ public class Traffic {
                     newSpeed = speed;
                     while(newSpeed==speed)
                     {
-                        System.out.println("Speed Change");
                         newSpeed = r.nextGaussian()*speedStandardDev + speedMean;
                     }
                     if(parking==true)
