@@ -203,11 +203,11 @@ class AnalysisDay {
             while (it.hasNext()) {
                 Map.Entry<String, List<AnalysisLine>> entry = it.next();
                 String vehicleType = entry.getKey();
-                out.write("Vehicle type: " + vehicleType + System.lineSeparator());
-                out.write("\tSpeed mean: " + speedMeanList.get(vehicleType) + System.lineSeparator());
-                out.write("\tSpeed SD: " + speedSDList.get(vehicleType) + System.lineSeparator());
-                out.write("\tVolume mean: " + volumeMeanList.get(vehicleType) + System.lineSeparator());
-                out.write("\tVolume SD: " + volumeSDList.get(vehicleType) + System.lineSeparator());
+                out.write("Vehicle type: " + vehicleType + "\n");
+                out.write("\tSpeed mean: " + speedMeanList.get(vehicleType) + "\n");
+                out.write("\tSpeed SD: " + speedSDList.get(vehicleType) + "\n");
+                out.write("\tVolume mean: " + volumeMeanList.get(vehicleType) + "\n");
+                out.write("\tVolume SD: " + volumeSDList.get(vehicleType) + "\n");
                 out.write(System.lineSeparator());
             }
             out.close();
