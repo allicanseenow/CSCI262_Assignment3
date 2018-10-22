@@ -30,7 +30,7 @@ public class AnalysisEngine {
             if (averageSpeed > speedLimit) {
                 line.setBreachSpeed(averageSpeed);
                 if (!speedBreachMap.containsKey(day)) {
-                    speedBreachMap.put(day, new ArrayList<>());
+                    speedBreachMap.put(day, new ArrayList<AnalysisLine>());
                 }
                 speedBreachMap.get(day).add(line);
             }
@@ -85,7 +85,7 @@ public class AnalysisEngine {
     }
 
     public void analyze(String logFileName) {
-        dayList = new ArrayList<>();
+        dayList = new ArrayList<AnalysisDay>();
         try {
             Scanner sc = new Scanner(new File(logFileName));
             readFirstLine(sc);
@@ -126,7 +126,7 @@ public class AnalysisEngine {
     }
 
     public AnalysisEngine(String fileName) {
-        speedBreachMap = new HashMap<>();
+        speedBreachMap = new HashMap<Integer, List<AnalysisLine>>();
         clearLogFile();
         analyze(fileName);
     }
@@ -146,18 +146,18 @@ class AnalysisDay {
 
     public AnalysisDay(int day) {
         this.day = day;
-        map = new HashMap<>();
-        speedMeanList = new HashMap<>();
-        speedSDList = new HashMap<>();
-        volumeMeanList = new HashMap<>();
-        volumeSDList = new HashMap<>();
+        map = new HashMap<String, List<AnalysisLine>>();
+        speedMeanList = new HashMap<String, Double>();
+        speedSDList = new HashMap<String, Double>();
+        volumeMeanList = new HashMap<String, Double>();
+        volumeSDList = new HashMap<String, Double>();
     }
     public void put(String vehicleType, AnalysisLine lineData) {
         if (map.containsKey(vehicleType)) {
             map.get(vehicleType).add(lineData);
         }
         else {
-            map.put(vehicleType, new ArrayList<>());
+            map.put(vehicleType, new ArrayList<AnalysisLine>());
             map.get(vehicleType).add(lineData);
         }
     }
