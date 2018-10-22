@@ -220,6 +220,14 @@ class AnalysisDay {
     public Map<String, List<AnalysisLine>> getMap() {
         return map;
     }
+
+    public Map<String, Double> getSpeedMeanList() {
+        return speedMeanList;
+    }
+
+    public Map<String, Double> getVolumeMeanList() {
+        return volumeMeanList;
+    }
 }
 
 class AnalysisLine {
