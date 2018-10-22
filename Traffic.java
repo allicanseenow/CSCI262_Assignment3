@@ -366,10 +366,11 @@ public class Traffic {
                 out.write(":ParkStart:"+v.ParkingStartTime);
                 out.write(":ParkEnd:"+v.ParkingStopTime);
                 out.write(":Speed:"+v.Speed);
+                out.write(":EndRoadDep:"+v.EndRoadDeparture);
                 out.write(":FinalSpeed:"+v.FinalSpeed);
                 out.write("\n");
                 //log file entries are as below
-                //Day:XX:VType:XX:ArrTime:XX:DepTime:XX:Parking:y/n:ParkStart:XX:ParkEnd:XX:Speed:XX:FinalSpeed:XX
+                //Day:XX:VType:XX:ArrTime:XX:DepTime:XX:Parking:y/n:ParkStart:XX:ParkEnd:XX:Speed:XX:EndRoadDep:XX:FinalSpeed:XX
             }
             out.close();
         }catch(Exception e)//Exception is for general exceptions
