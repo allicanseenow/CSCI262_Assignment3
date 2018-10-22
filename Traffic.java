@@ -1,4 +1,3 @@
-package pkg262ass3;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -663,6 +662,11 @@ public class Traffic {
                 if(dTimeMin<=parkEndTime)
                 {
                     dTimeMin = parkEndTime+2;
+                }
+                if(dTimeMin<aTimeMin)
+                {
+                    int difference = aTimeMin - dTimeMin;
+                    dTimeMin = dTimeMin + difference + 7;
                 }
                 //arrival time, convert minutes to readable string format
                 String arrivalTime = ConvertMinutesToHrsMin(aTimeMin);
