@@ -381,6 +381,7 @@ public class Traffic {
                 out.write("-ParkEnd:"+v.ParkingStopTime);
                 out.write("-Speed:"+v.Speed);
                 out.write("-EndRoadDep:"+v.EndRoadDeparture);
+                out.write("-Registration:"+v.Registration);
                 out.write("\n");
                 //log file entries are as below
                 //Day:XX-VType:XX-ArrTime:XX-DepTime:XX-Parking:y/n-ParkStart:XX-ParkEnd:XX-Speed:XX-EndRoadDep:XX
