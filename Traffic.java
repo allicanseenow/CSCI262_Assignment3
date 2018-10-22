@@ -384,6 +384,7 @@ public class Traffic {
                 out.write("-Speed:"+v.Speed);
                 out.write("-EndRoadDep:"+v.EndRoadDeparture);
                 out.write("-Registration:"+v.Registration);
+                out.write("-VolumePerDay:"+v.NumberOfTypePerDay);
                 out.write("\n");
                 //log file entries are as below
                 //Day:XX-VType:XX-ArrTime:XX-DepTime:XX-Parking:y/n-ParkStart:XX-ParkEnd:XX-Speed:XX-EndRoadDep:XX
@@ -410,6 +411,10 @@ public class Traffic {
             //generate random number of vehicles for this one
             Random r = new Random();
             numberOfVehicles = (int) Math.round(r.nextGaussian()*numStandardDev + numMean);
+            if(numberOfVehicles<0)
+            {
+                numberOfVehicles = numberOfVehicles*(-1);
+            }
             //also get the speed mean to help generate times later
             double speedMean = vehicle.speedMean;
             double speedStandardDev = vehicle.speedStandardDeviation;
@@ -511,6 +516,60 @@ public class Traffic {
                     parkEndTime=0;
                 }
                 
+                //change speed...
+                int randomNum = rand.nextInt(1+1)+0;
+                boolean ChangeSpeed = false;
+                double newSpeed = 0;
+                int SpeedChangeTime = 0;
+                //if true
+                if(randomNum==1)
+                {
+                    ChangeSpeed = true;
+                    //generate new speed (based off original mean+standardDev)
+                    newSpeed = speed;
+                    while(newSpeed==speed)
+                    {
+                        System.out.println("Speed Change");
+                        newSpeed = r.nextGaussian()*speedStandardDev + speedMean;
+                    }
+                    if(parking==true)
+                    {
+                        //generate another random number to determine if it is before parking or after parking
+                        int before = rand.nextInt(1+1)+0;
+                        if(before==1)
+                        {
+                            //generate time before parking and arrival
+                            SpeedChangeTime = rand.nextInt((parkSTime-aTimeMin)+1)+aTimeMin;//( (max - min) + 1 ) + min
+                        }else
+                        {
+                            //generate time after parking and before departure
+                            SpeedChangeTime =rand.nextInt((dTimeMin-parkEndTime)+1)+parkEndTime;
+                        }
+                        
+                    }else
+                    {//if parking false
+                        //generate speed change time to anytime between arrival and departure
+                        SpeedChangeTime = rand.nextInt((dTimeMin - aTimeMin)+1)+aTimeMin;
+                        
+                        //calculate amount of road travelled
+                        int timeElapsed = SpeedChangeTime - aTimeMin;
+                        double roadInDouble = roadLength;
+                        double distanceTravelled = speed*timeElapsed;
+                        double distanceToGo = roadLength - distanceTravelled;
+                        //nt TimeLeft = (int)Math.round();
+                        
+                        //roadlength - travelled
+                        //if endroadd==true
+                            //use this to calculate how much time it'll take to get off the road
+                            //update departure time as necessary
+                    }                       
+                }
+                    
+                        
+                    
+                    
+                
+                
                 
                 //also check if departure exceeds 1440 (a whole 24 hours)
                 if(dTimeMin>=1440)
@@ -528,16 +587,15 @@ public class Traffic {
                 String arrivalTime = ConvertMinutesToHrsMin(aTimeMin);
                 //do the same for departuretime
                 String departureTime = ConvertMinutesToHrsMin(dTimeMin);
-                //calculate average speed over road
-                double hoursSpent = (Double.valueOf(dTimeMin) - Double.valueOf(aTimeMin))/60;
-                double FinalSpeed = roadLength/hoursSpent;
+                
                 //initialise a VehicleData object
                 VehicleData a = new VehicleData(VName,arrivalTime,
                                                 departureTime,EndRoadD,
                                                 parking,parkSTime,
                                                 parkEndTime,speed,
                                                 dayNumber, Registration,
-                                                FinalSpeed);
+                                                ChangeSpeed,SpeedChangeTime,
+                                                newSpeed,numberOfVehicles);
                 //add object to the list
                 GeneratedDataList.add(a);
             }
