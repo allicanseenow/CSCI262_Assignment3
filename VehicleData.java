@@ -1,4 +1,3 @@
-
 //class for storing generated data
 class VehicleData implements Comparable<VehicleData>
 {
