@@ -201,8 +201,9 @@ public class Traffic {
             //MANAGE PARKING SPACES
             int availableParking = a.getParkingSpaceAvailable();
             ManageParking(availableParking,GeneratedDataList);
+            int rl = (int)roadLength;
             //WriteToLog
-            WriteToLog(GeneratedDataList,noOfVehicleTypes);
+            WriteToLog(GeneratedDataList,noOfVehicleTypes,rl);
             
             //CODE FOR ANALYSIS ENGINE
         
@@ -356,13 +357,14 @@ public class Traffic {
     }
     
     //METHOD FOR WRITING TO LOG FILE
-    public static void WriteToLog(List<VehicleData> GeneratedDataList,int numOfV)
+    public static void WriteToLog(List<VehicleData> GeneratedDataList,int numOfV,int roadLength)
     {//take a variable of List<VehicleData> as parameter
         //try to write stuff to log
         try
         {
             BufferedWriter out = new BufferedWriter(new FileWriter(LogFileName,false));
-            out.write(numOfV + "\n");
+            out.write(numOfV+" ");
+            out.write(roadLength+"\n");
             //NOTE: true for append, false for overwrite
             for(VehicleData v : GeneratedDataList)
             {
