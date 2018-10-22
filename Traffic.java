@@ -173,10 +173,17 @@ public class Traffic {
             int numOfDays = Integer.parseInt(days);
             a = new Traffic(vehicleFileName,statFileName,numOfDays);
 
+            
             //and then to get the vehicle list and stats list
             Vehicle[] v = a.getVehicleList();
             Stats[] VehicleStats = a.getStatsList();
             double roadLength = a.getRoadLength();
+            //get number of vehicle types
+            int noOfVehicleTypes=0;
+            for(Vehicle e: v)
+            {
+                noOfVehicleTypes++;
+            }
             
             List<VehicleData> GeneratedDataList = new ArrayList<VehicleData>();
             System.out.println("\n\n");
@@ -195,7 +202,7 @@ public class Traffic {
             int availableParking = a.getParkingSpaceAvailable();
             ManageParking(availableParking,GeneratedDataList);
             //WriteToLog
-            WriteToLog(GeneratedDataList);
+            WriteToLog(GeneratedDataList,noOfVehicleTypes);
             
             //CODE FOR ANALYSIS ENGINE
         
@@ -349,12 +356,13 @@ public class Traffic {
     }
     
     //METHOD FOR WRITING TO LOG FILE
-    public static void WriteToLog(List<VehicleData> GeneratedDataList)
+    public static void WriteToLog(List<VehicleData> GeneratedDataList,int numOfV)
     {//take a variable of List<VehicleData> as parameter
         //try to write stuff to log
         try
         {
             BufferedWriter out = new BufferedWriter(new FileWriter(LogFileName,false));
+            out.write(numOfV + "\n");
             //NOTE: true for append, false for overwrite
             for(VehicleData v : GeneratedDataList)
             {
