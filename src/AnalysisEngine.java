@@ -216,6 +216,10 @@ class AnalysisDay {
             ex.printStackTrace();
         }
     }
+
+    public Map<String, List<AnalysisLine>> getMap() {
+        return map;
+    }
 }
 
 class AnalysisLine {
